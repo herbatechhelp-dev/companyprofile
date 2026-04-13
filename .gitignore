@@ -1,0 +1,57 @@
+# Media (Images & Videos)
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.svg
+*.webp
+*.ico
+*.mp4
+*.mov
+*.avi
+*.wmv
+
+# Archives & Binary
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+*.exe
+*.bin
+
+# Documents
+*.pdf
+*.docx
+*.xlsx
+*.pptx
+
+# Databases
+*.sql
+*.sqlite
+
+/.phpunit.cache
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/public/storage_backup
+/storage/*.key
+/storage/app/public/*
+/storage/framework/cache/data/*
+/storage/framework/views/*.php
+/storage/framework/sessions/*
+/storage/logs/*.log
+/vendor
+.env
+.env.backup
+.env.production
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+npm-debug.log
+yarn-error.log
+/.fleet
+/.idea
+/.vscode
