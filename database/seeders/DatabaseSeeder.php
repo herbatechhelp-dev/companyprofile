@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Article;
+use App\Models\ArticleCategory;
 use App\Models\CompanyInfo;
 use App\Models\ContactMessage;
 use App\Models\HomeSection;
@@ -244,11 +245,15 @@ class DatabaseSeeder extends Seeder
 
     private function createArticles(): void
     {
+        // Ensure categories exist
+        $csrCategory = ArticleCategory::firstOrCreate(['slug' => 'csr'], ['name' => 'CSR']);
+        $eventsCategory = ArticleCategory::firstOrCreate(['slug' => 'events'], ['name' => 'Events']);
+
         $articles = [
             [
                 'title' => 'Community Tree Planting Initiative 2024',
                 'slug' => 'community-tree-planting-initiative-2024',
-                'category' => 'csr',
+                'article_category_id' => $csrCategory->id,
                 'content' => '<p>GreenTech Solutions successfully organized a community tree planting event in collaboration with local environmental groups. Over 500 volunteers participated in planting 2,000 native tree species in the urban forest area.</p>
                             <p>The initiative aims to combat urban heat island effect and improve air quality in the city. We are committed to planting 10,000 trees by 2025 as part of our environmental commitment.</p>
                             <h3>Event Highlights</h3>
@@ -263,7 +268,7 @@ class DatabaseSeeder extends Seeder
             [
                 'title' => 'Annual Sustainability Conference 2024',
                 'slug' => 'annual-sustainability-conference-2024',
-                'category' => 'events',
+                'article_category_id' => $eventsCategory->id,
                 'content' => '<p>Join us for our Annual Sustainability Conference where industry leaders share insights on green technology and sustainable business practices.</p>
                             <h3>Conference Details</h3>
                             <p><strong>Date:</strong> November 15-16, 2024<br>
@@ -280,7 +285,7 @@ class DatabaseSeeder extends Seeder
             [
                 'title' => 'Employee Volunteer Program Launch',
                 'slug' => 'employee-volunteer-program-launch',
-                'category' => 'csr',
+                'article_category_id' => $csrCategory->id,
                 'content' => '<p>We are excited to announce the launch of our new Employee Volunteer Program, allowing our team members to contribute 40 paid hours annually to environmental and social causes.</p>
                             <p>The program has already seen tremendous participation with over 200 employees signing up in the first week.</p>
                             <h3>Program Benefits</h3>
@@ -295,7 +300,7 @@ class DatabaseSeeder extends Seeder
             [
                 'title' => 'Green Technology Workshop Series',
                 'slug' => 'green-technology-workshop-series',
-                'category' => 'events',
+                'article_category_id' => $eventsCategory->id,
                 'content' => '<p>We are hosting a series of workshops focused on practical green technology applications for businesses and homeowners.</p>
                             <h3>Workshop Schedule</h3>
                             <ul>
