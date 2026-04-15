@@ -9,6 +9,7 @@ use App\Models\ContactMessage;
 use App\Models\HomeSection;
 use App\Models\Product;
 use App\Models\SiteSetting;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -21,6 +22,9 @@ class DatabaseSeeder extends Seeder
 
         // Site Settings
         $this->createSiteSettings();
+
+        // Admin Users
+        $this->createAdminUsers();
 
         // Home Sections
         $this->createHomeSections();
@@ -103,6 +107,25 @@ class DatabaseSeeder extends Seeder
             SiteSetting::updateOrCreate(
                 ['key' => $setting['key']],
                 $setting
+            );
+        }
+    }
+
+    private function createAdminUsers(): void
+    {
+        $users = [
+            [
+                'name' => 'Administrator',
+                'email' => 'admin@herbatech.tech',
+                'password' => 'Admin@12345',
+                'email_verified_at' => now(),
+            ],
+        ];
+
+        foreach ($users as $user) {
+            User::updateOrCreate(
+                ['email' => $user['email']],
+                $user
             );
         }
     }
