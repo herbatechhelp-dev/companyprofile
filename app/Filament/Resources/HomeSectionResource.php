@@ -14,23 +14,23 @@ class HomeSectionResource extends Resource
 {
     protected static ?string $model = HomeSection::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-home';
+    protected static ?string $navigationIcon = 'heroicon-o-cog';
 
-    protected static ?string $navigationGroup = 'Manajemen Situs';
+    protected static ?string $navigationGroup = 'Pengaturan Situs';
 
     public static function getModelLabel(): string
     {
-        return 'Bagian Halaman';
+        return 'Home Section';
     }
 
     public static function getPluralModelLabel(): string
     {
-        return 'Bagian Halaman';
+        return 'Home Sections';
     }
 
     public static function getNavigationLabel(): string
     {
-        return 'Bagian Hero & Konten';
+        return 'Home Sections';
     }
 
     public static function form(Form $form): Form

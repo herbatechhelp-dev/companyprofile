@@ -701,6 +701,7 @@
     <!-- Section Mengapa Harus Kami? -->
     @php
         $advantages = App\Models\Advantage::active()->orderBy('sort_order')->get();
+        $maklonSteps = App\Models\MaklonFlowStep::active()->ordered()->get();
     @endphp
 
     @if($advantages->count() > 0)
@@ -754,6 +755,86 @@
         </div>
     </section>
     @endif
+
+    <div class="relative bg-gradient-to-r from-green-600 to-emerald-600">
+        <div class="container mx-auto px-4 py-8">
+            <div class="text-center">
+                <div class="inline-flex flex-wrap items-center justify-center gap-3 rounded-full bg-black/20 px-8 py-3.5 text-white shadow-lg">
+                    <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h10"></path>
+                    </svg>
+                    <span class="text-center text-base font-semibold tracking-wide md:text-lg">{{ __('Alur Maklon') }}</span>
+                    <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h10"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section Alur Maklon -->
+    <section id="maklon-flow" class="py-16 bg-emerald-50 relative">
+        @php
+            $fallbackMaklonSteps = collect([
+                ['title' => __('Konsultasi & briefing'), 'description' => __('Bersama Anda kami menentukan spesifikasi produk, target pasar, dan kebutuhan manufaktur.')],
+                ['title' => __('Perencanaan produksi'), 'description' => __('Mengatur jadwal, kapasitas produksi, bahan baku, serta dokumentasi teknis.')],
+                ['title' => __('Sample & quality control'), 'description' => __('Produksi sample, pengujian mutu, dan persetujuan sebelum produksi massal.')],
+                ['title' => __('Produksi massal'), 'description' => __('Produksi berjalan dengan kontrol kualitas dan pengawasan setiap tahap.')],
+                ['title' => __('Pengiriman & dukungan'), 'description' => __('Paket dikirim, dilacak, dan kami siap mendukung layanan purna jual.')],
+            ]);
+
+            $flowSteps = $maklonSteps->isNotEmpty()
+                ? $maklonSteps->map(fn ($step) => [
+                    'title' => $step->title,
+                    'description' => trim(strip_tags(html_entity_decode((string) $step->description))),
+                ])->values()
+                : $fallbackMaklonSteps;
+        @endphp
+        <div class="container mx-auto px-4 max-w-6xl">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-green-800 mb-4">{{ __('Alur Maklon') }}</h2>
+                <p class="text-gray-500 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
+                    {{ __('Langkah-langkah kerjasama maklon kami agar proses produksi berjalan lancar dan sesuai kebutuhan brand Anda.') }}
+                </p>
+            </div>
+
+            <div class="maklon-flow-shell relative overflow-hidden rounded-[2rem] border border-emerald-100 bg-white p-6 md:p-10 shadow-[0_20px_60px_rgba(15,23,42,0.08)]" data-aos="fade-up">
+                <div class="pointer-events-none absolute inset-x-6 top-6 h-28 rounded-full bg-[radial-gradient(circle_at_top,rgba(16,185,129,0.16),transparent_60%)] blur-2xl"></div>
+                <div class="relative mb-10 flex flex-wrap items-center justify-center gap-3 text-center md:mb-14">
+                    <span class="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-emerald-700">
+                        <span class="h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                        {{ __('Proses berjalan terarah') }}
+                    </span>
+                    <span class="text-sm text-gray-500">{{ __('Setiap tahap dirancang berurutan agar brand Anda bergerak dari ide ke produk jadi dengan kontrol yang jelas.') }}</span>
+                </div>
+
+                <div class="maklon-road relative mx-auto max-w-5xl">
+                    <div class="maklon-road-track absolute bottom-0 left-6 top-0 w-[4px] overflow-hidden rounded-full md:left-1/2 md:-translate-x-1/2"></div>
+                    <div class="maklon-road-runner absolute left-6 top-0 h-16 w-16 md:left-1/2 md:-translate-x-1/2"></div>
+
+                    @foreach($flowSteps as $index => $step)
+                        <article class="maklon-road-step relative grid grid-cols-[3rem_1fr] items-start gap-4 pb-8 md:grid-cols-2 md:gap-12 md:pb-10" data-aos="{{ $index % 2 === 0 ? 'fade-right' : 'fade-left' }}" data-aos-delay="{{ 120 + ($index * 110) }}">
+                            <div class="maklon-road-node absolute left-6 top-6 h-5 w-5 -translate-x-1/2 rounded-full border-[5px] border-white bg-emerald-500 shadow-[0_0_0_8px_rgba(16,185,129,0.15)] md:left-1/2"></div>
+
+                            <div class="col-start-2 {{ $index % 2 === 0 ? 'md:col-start-1 md:pr-20 md:text-right' : 'md:col-start-2 md:pl-20' }}">
+                                <div class="maklon-flow-card group relative overflow-hidden rounded-[1.75rem] border border-emerald-100 bg-gradient-to-br from-white via-emerald-50 to-green-50 p-6 shadow-[0_18px_40px_rgba(15,23,42,0.08)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_22px_50px_rgba(16,185,129,0.18)]" style="--step-delay: {{ number_format($index * 0.45, 2, '.', '') }}s;">
+                                    <div class="absolute right-0 top-0 h-24 w-24 rounded-full bg-emerald-200/40 blur-2xl transition duration-500 group-hover:scale-125"></div>
+                                    <div class="relative flex {{ $index % 2 === 0 ? 'md:justify-end' : 'md:justify-start' }}">
+                                        <span class="inline-flex items-center gap-3 rounded-full bg-emerald-900 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-emerald-50 shadow-lg shadow-emerald-900/20">
+                                            <span class="text-emerald-200">{{ __('Step') }}</span>
+                                            <span>{{ str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) }}</span>
+                                        </span>
+                                    </div>
+                                    <h4 class="relative mt-5 text-xl font-bold text-green-900">{{ $step['title'] }}</h4>
+                                    <p class="relative mt-3 text-sm leading-7 text-gray-600">{{ $step['description'] }}</p>
+                                </div>
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Section Divider Produk -->
     <div class="relative bg-gradient-to-r from-green-600 to-emerald-600">
@@ -1049,6 +1130,118 @@
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     }
 
+    .maklon-flow-shell {
+        background-image:
+            linear-gradient(135deg, rgba(236, 253, 245, 0.86), rgba(255, 255, 255, 0.98)),
+            radial-gradient(circle at top right, rgba(16, 185, 129, 0.18), transparent 30%);
+    }
+
+    .maklon-road {
+        padding-top: 0.5rem;
+    }
+
+    .maklon-road-track {
+        background: linear-gradient(180deg, rgba(52, 211, 153, 0.18), rgba(5, 150, 105, 0.5), rgba(6, 95, 70, 0.2));
+    }
+
+    .maklon-road-track::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.95) 0,
+            rgba(255, 255, 255, 0.95) 14px,
+            transparent 14px,
+            transparent 28px
+        );
+        opacity: 0.55;
+    }
+
+    .maklon-road-runner::before,
+    .maklon-road-runner::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 0;
+        border-radius: 9999px;
+        transform: translateX(-50%);
+    }
+
+    .maklon-road-runner::before {
+        height: 3.5rem;
+        width: 3.5rem;
+        background: radial-gradient(circle, rgba(251, 191, 36, 0.9) 0%, rgba(16, 185, 129, 0.85) 45%, rgba(5, 150, 105, 0) 78%);
+        filter: blur(1px);
+        animation: maklon-run 8s linear infinite;
+    }
+
+    .maklon-road-runner::after {
+        height: 1rem;
+        width: 1rem;
+        top: 1.2rem;
+        background: white;
+        box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.22);
+        animation: maklon-run-dot 8s linear infinite;
+    }
+
+    .maklon-flow-card {
+        animation: maklon-card-float 5.5s ease-in-out infinite;
+        animation-delay: var(--step-delay);
+    }
+
+    .maklon-flow-card::after {
+        content: '';
+        position: absolute;
+        inset: auto 1.5rem 1rem;
+        height: 1px;
+        background: linear-gradient(90deg, rgba(16, 185, 129, 0), rgba(16, 185, 129, 0.38), rgba(16, 185, 129, 0));
+    }
+
+    @keyframes maklon-run {
+        0% {
+            transform: translate(-50%, 0);
+            opacity: 0;
+        }
+        8% {
+            opacity: 1;
+        }
+        92% {
+            opacity: 1;
+        }
+        100% {
+            transform: translate(-50%, calc(100% - 3.5rem));
+            opacity: 0;
+        }
+    }
+
+    @keyframes maklon-run-dot {
+        0% {
+            transform: translate(-50%, 0) scale(0.9);
+            opacity: 0;
+        }
+        12% {
+            opacity: 1;
+        }
+        50% {
+            transform: translate(-50%, calc(50% - 0.5rem)) scale(1.05);
+        }
+        100% {
+            transform: translate(-50%, calc(100% - 1rem)) scale(0.92);
+            opacity: 0;
+        }
+    }
+
+    @keyframes maklon-card-float {
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-8px);
+        }
+    }
+
     /* Mobile optimizations */
     @media (max-width: 768px) {
         .hero-section {
@@ -1074,6 +1267,20 @@
             flex-direction: column !important;
             gap: 1rem !important;
         }
+
+        .maklon-road-runner {
+            left: 1.5rem;
+            transform: translateX(-50%);
+        }
+
+        .maklon-road-step:last-child {
+            padding-bottom: 0;
+        }
+
+        .maklon-flow-card {
+            animation-duration: 4.8s;
+        }
+
     }
 </style>
 @endpush

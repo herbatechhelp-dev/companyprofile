@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\Facility;
 use App\Models\SiteSetting;
 use App\Models\ArticleCategory;
+use App\Models\MaklonFlowStep;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -20,6 +21,12 @@ class PageController extends Controller
         $productsSection = HomeSection::where('section', 'products')->first();
         $researchSection = HomeSection::where('section', 'research')->first();
         
+        try {
+            $maklonSteps = MaklonFlowStep::active()->ordered()->get();
+        } catch (\Exception $e) {
+            $maklonSteps = collect();
+        }
+        
         $featuredProducts = Product::with('images')->featured()->orderBy('order')->take(6)->get();
         
         return view('home', compact(
@@ -27,7 +34,8 @@ class PageController extends Controller
             'aboutSection',
             'productsSection',
             'researchSection',
-            'featuredProducts'
+            'featuredProducts',
+            'maklonSteps'
         ));
     }
 
