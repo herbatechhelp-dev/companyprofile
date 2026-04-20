@@ -756,6 +756,38 @@
     </section>
     @endif
 
+    <!-- Partner/Client Marquee Section -->
+    @php
+        $partners = App\Models\Partner::active()->orderBy('sort_order')->get();
+    @endphp
+
+    @if($partners->count() > 0)
+    <div class="bg-emerald-50/50 pt-6 pb-8 sm:pt-8 sm:pb-10 overflow-hidden relative z-10" data-aos="fade-up">
+        <!-- Section Title -->
+        <div class="text-center mb-6 sm:mb-8">
+            <h3 class="text-xs md:text-sm font-bold tracking-[0.2em] uppercase text-green-700">
+                {{ __('TELAH DIPERCAYA OLEH PERUSAHAAN TERNAMA') }}
+            </h3>
+        </div>
+
+        <div class="marquee-wrapper items-center">
+            @php
+                $repeatCount = 4;
+            @endphp
+            @for ($i = 0; $i < $repeatCount; $i++)
+            <div class="animate-marquee flex items-center gap-16 sm:gap-24 px-8 sm:px-16" {!! $i > 0 ? 'aria-hidden="true"' : '' !!}>
+                @foreach($partners as $partner)
+                <div class="flex-shrink-0 transition-all duration-500 hover:scale-105">
+                    <img src="{{ asset('storage/' . $partner->logo) }}" alt="{{ $partner->name }}" 
+                         class="h-10 sm:h-12 md:h-14 w-auto object-contain transition-all duration-300">
+                </div>
+                @endforeach
+            </div>
+            @endfor
+        </div>
+    </div>
+    @endif
+
     <div class="relative bg-gradient-to-r from-green-600 to-emerald-600">
         <div class="container mx-auto px-4 py-8">
             <div class="text-center">
@@ -860,7 +892,7 @@
     @endphp
     
     @if($productsSection && $productsSection->is_active)
-    <section id="products" class="py-20 bg-gradient-to-br from-green-100 to-emerald-200">
+    <section id="products" class="pt-20 pb-12 bg-gradient-to-br from-green-100 to-emerald-200">
         <div class="container mx-auto px-4">
             <!-- Section Header -->
             <div class="text-center mb-16 relative">
@@ -922,38 +954,6 @@
             @endif
         </div>
     </section>
-
-    <!-- Partner/Client Marquee Section -->
-    @php
-        $partners = App\Models\Partner::active()->orderBy('sort_order')->get();
-    @endphp
-
-    @if($partners->count() > 0)
-    <div class="bg-green-50 py-12 sm:py-16 overflow-hidden relative z-10" data-aos="fade-up">
-        <!-- Section Title -->
-        <div class="text-center mb-12">
-            <h3 class="text-sm md:text-lg font-bold tracking-[0.2em] uppercase text-green-700">
-                {{ __('TELAH DIPERCAYA OLEH PERUSAHAAN TERNAMA') }}
-            </h3>
-        </div>
-
-        <div class="marquee-wrapper items-center">
-            @php
-                $repeatCount = 4;
-            @endphp
-            @for ($i = 0; $i < $repeatCount; $i++)
-            <div class="animate-marquee flex items-center gap-24 sm:gap-40 px-12 sm:px-20" {!! $i > 0 ? 'aria-hidden="true"' : '' !!}>
-                @foreach($partners as $partner)
-                <div class="flex-shrink-0 transition-all duration-500 hover:scale-110">
-                    <img src="{{ asset('storage/' . $partner->logo) }}" alt="{{ $partner->name }}" 
-                         class="h-14 sm:h-20 md:h-24 w-auto object-contain transition-all duration-300">
-                </div>
-                @endforeach
-            </div>
-            @endfor
-        </div>
-    </div>
-    @endif
 
     <!-- Section Divider -->
     <div class="relative bg-gradient-to-r from-emerald-600 to-green-700 py-12">

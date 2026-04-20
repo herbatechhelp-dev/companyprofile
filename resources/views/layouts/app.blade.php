@@ -100,9 +100,7 @@
             min-width: 100% !important;
             align-items: center;
             justify-content: space-around;
-            animation: marquee
-                {{ $marqueeSpeed }}
-                s linear infinite !important;
+            animation: marquee {{ $marqueeSpeed }}s linear infinite !important;
             will-change: transform;
         }
 
