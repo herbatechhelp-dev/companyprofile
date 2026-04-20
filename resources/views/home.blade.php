@@ -597,7 +597,7 @@
                 <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
 
                     {{-- Category Header --}}
-                    <div class="flex items-center gap-2 mb-5">
+                    <div class="flex items-center justify-center gap-2 mb-5">
                         <span class="text-green-700 flex-shrink-0">
                             @if($material->image)
                                 <img src="{{ asset('storage/' . $material->image) }}"
@@ -810,7 +810,7 @@
 
                 <div class="maklon-road relative mx-auto max-w-5xl">
                     <div class="maklon-road-track absolute bottom-0 left-6 top-0 w-[4px] overflow-hidden rounded-full md:left-1/2 md:-translate-x-1/2"></div>
-                    <div class="maklon-road-runner absolute left-6 top-0 h-16 w-16 md:left-1/2 md:-translate-x-1/2"></div>
+                    <div class="maklon-road-runner absolute left-6 top-0 h-14 w-14 md:left-1/2 md:-translate-x-1/2"></div>
 
                     @foreach($flowSteps as $index => $step)
                         <article class="maklon-road-step relative grid grid-cols-[3rem_1fr] items-start gap-4 pb-8 md:grid-cols-2 md:gap-12 md:pb-10" data-aos="{{ $index % 2 === 0 ? 'fade-right' : 'fade-left' }}" data-aos-delay="{{ 120 + ($index * 110) }}">
@@ -1158,31 +1158,52 @@
         opacity: 0.55;
     }
 
-    .maklon-road-runner::before,
+    .maklon-road-runner {
+        animation: maklon-runner-move 8s linear infinite;
+        z-index: 10;
+        /* For mobile, its left is 1.5rem (24px). The track is left 1.5rem with w-4px. So track center is 24px + 2px = 26px.
+           Runner width is 14 (3.5rem = 56px). If left is 6 (24px), it's not centered on track.
+           We'll center the runner's pseudo elements relative to its own position. */
+    }
+
+    .maklon-road-runner::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 9999px;
+        background: radial-gradient(circle, rgba(251, 191, 36, 0.9) 0%, rgba(16, 185, 129, 0.85) 45%, rgba(5, 150, 105, 0) 78%);
+        filter: blur(1px);
+    }
+
     .maklon-road-runner::after {
         content: '';
         position: absolute;
         left: 50%;
-        top: 0;
-        border-radius: 9999px;
-        transform: translateX(-50%);
-    }
-
-    .maklon-road-runner::before {
-        height: 3.5rem;
-        width: 3.5rem;
-        background: radial-gradient(circle, rgba(251, 191, 36, 0.9) 0%, rgba(16, 185, 129, 0.85) 45%, rgba(5, 150, 105, 0) 78%);
-        filter: blur(1px);
-        animation: maklon-run 8s linear infinite;
-    }
-
-    .maklon-road-runner::after {
+        top: 50%;
         height: 1rem;
         width: 1rem;
-        top: 1.2rem;
         background: white;
+        border-radius: 9999px;
         box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.22);
-        animation: maklon-run-dot 8s linear infinite;
+        transform: translate(-50%, -50%);
+        animation: maklon-run-dot 2s infinite ease-in-out;
+    }
+
+    @keyframes maklon-runner-move {
+        0% {
+            top: 0;
+            opacity: 0;
+        }
+        8% {
+            opacity: 1;
+        }
+        92% {
+            opacity: 1;
+        }
+        100% {
+            top: calc(100% - 3.5rem);
+            opacity: 0;
+        }
     }
 
     .maklon-flow-card {
@@ -1198,37 +1219,12 @@
         background: linear-gradient(90deg, rgba(16, 185, 129, 0), rgba(16, 185, 129, 0.38), rgba(16, 185, 129, 0));
     }
 
-    @keyframes maklon-run {
-        0% {
-            transform: translate(-50%, 0);
-            opacity: 0;
-        }
-        8% {
-            opacity: 1;
-        }
-        92% {
-            opacity: 1;
-        }
-        100% {
-            transform: translate(-50%, calc(100% - 3.5rem));
-            opacity: 0;
-        }
-    }
-
     @keyframes maklon-run-dot {
-        0% {
-            transform: translate(-50%, 0) scale(0.9);
-            opacity: 0;
-        }
-        12% {
-            opacity: 1;
+        0%, 100% {
+            transform: translate(-50%, -50%) scale(0.9);
         }
         50% {
-            transform: translate(-50%, calc(50% - 0.5rem)) scale(1.05);
-        }
-        100% {
-            transform: translate(-50%, calc(100% - 1rem)) scale(0.92);
-            opacity: 0;
+            transform: translate(-50%, -50%) scale(1.1);
         }
     }
 
@@ -1269,7 +1265,8 @@
         }
 
         .maklon-road-runner {
-            left: 1.5rem;
+            /* Keep it aligned to track on mobile */
+            left: 1.625rem; /* Track is left-6 (1.5rem). Track width is 4px. Center is 26px. Runner is 14 w (3.5rem = 56px). Half is 28px. 26 - 28 = -2px. So left: calc(1.5rem - 2px) which is approx 1.375rem? Wait, `-translate-x-1/2` makes it centered. */
             transform: translateX(-50%);
         }
 
