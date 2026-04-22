@@ -12,6 +12,7 @@ Route::get('/articles/{category}', [PageController::class, 'articles'])->name('a
 Route::get('/articles/{category}/{slug}', [PageController::class, 'articleDetail'])->name('articles.detail');
 
 // Company Pages
+Route::get('/about-us', [PageController::class, 'aboutUs'])->name('about');
 Route::get('/our-company/{page}', [PageController::class, 'companyPage'])->name('company.page');
 
 // Industry/Products

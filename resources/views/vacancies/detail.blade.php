@@ -4,7 +4,7 @@
 
 @section('content')
     <!-- Header Section -->
-    <div class="bg-gray-900 pt-32 pb-20 relative overflow-hidden">
+    <div class="bg-gray-900 -mt-24 pt-24 pb-20 relative overflow-hidden">
         <div class="absolute inset-0 opacity-20">
             <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" class="w-full h-full object-cover" alt="Background">
         </div>
@@ -92,12 +92,14 @@
 
                     @php
                         $applyLink = $vacancy->application_link;
+                        $buttonText = __('Apply Now');
+                        
                         if (!$applyLink) {
                             $defaultEmail = App\Models\SiteSetting::getValue('email', 'hr@company.com');
                             $subject = 'Application for ' . $vacancy->title;
                             $body = 'Dear HR Team,%0D%0A%0D%0AI am writing to apply for the ' . $vacancy->title . ' position...';
                             $applyLink = "mailto:$defaultEmail?subject=$subject&body=$body";
-                            $buttonText = str_contains($applyLink, 'mailto:') ? __('Apply via Email') : __('Apply Now');
+                            $buttonText = __('Apply via Email');
                         }
                     @endphp
 

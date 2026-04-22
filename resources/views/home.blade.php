@@ -70,7 +70,7 @@
         
         <!-- Scroll Indicator -->
         <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <a href="#about" class="text-white hover:text-green-300 transition duration-300">
+            <a href="{{ route('about') }}" class="text-white hover:text-green-300 transition duration-300">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7-7-7m7-7V3"></path>
                 </svg>
@@ -109,85 +109,23 @@
             </div>
             
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Column 1: Text & CTA -->
                 <div class="animate-fade-in">
-                    <div class="text-gray-600 leading-relaxed space-y-4 text-justify">
+                    <div class="text-gray-600 leading-relaxed space-y-4 text-justify mb-8">
                         {!! $aboutSection->content ?? 'Company description goes here...' !!}
                     </div>
                     
-                    <!-- Video Display -->
-                    @if($aboutSection->video_url)
                     <div class="mt-8">
-                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">{{ __('Our Story in Video') }}</h3>
-                        <div class="bg-gray-900 rounded-custom overflow-hidden shadow-lg about-video-container border-4 border-white">
-                            <!-- Video content -->
-                            @php
-                                $videoUrl = $aboutSection->video_url;
-                                $embedUrl = '';
-                                
-                                if (str_contains($videoUrl, 'youtube.com/embed/')) {
-                                    $embedUrl = $videoUrl;
-                                } elseif (str_contains($videoUrl, 'youtube.com/watch?v=')) {
-                                    $videoId = substr($videoUrl, strpos($videoUrl, 'v=') + 2);
-                                    if (str_contains($videoId, '&')) {
-                                        $videoId = substr($videoId, 0, strpos($videoId, '&'));
-                                    }
-                                    $embedUrl = 'https://www.youtube.com/embed/' . $videoId;
-                                } elseif (str_contains($videoUrl, 'youtu.be/')) {
-                                    $videoId = substr($videoUrl, strpos($videoUrl, 'youtu.be/') + 9);
-                                    if (str_contains($videoId, '?')) {
-                                        $videoId = substr($videoId, 0, strpos($videoId, '?'));
-                                    }
-                                    $embedUrl = 'https://www.youtube.com/embed/' . $videoId;
-                                } elseif (str_contains($videoUrl, 'vimeo.com/')) {
-                                    $videoId = substr($videoUrl, strpos($videoUrl, 'vimeo.com/') + 10);
-                                    if (str_contains($videoId, '?')) {
-                                        $videoId = substr($videoId, 0, strpos($videoId, '?'));
-                                    }
-                                    $embedUrl = 'https://player.vimeo.com/video/' . $videoId;
-                                } elseif (str_contains($videoUrl, 'storage/')) {
-                                    $embedUrl = null;
-                                } else {
-                                    $embedUrl = $videoUrl;
-                                }
-                            @endphp
-                            
-                            @if($embedUrl)
-                                <div class="aspect-w-16 aspect-h-9">
-                                    <iframe 
-                                        src="{{ $embedUrl }}" 
-                                        class="w-full h-64 md:h-80"
-                                        frameborder="0" 
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                        allowfullscreen
-                                        loading="lazy">
-                                    </iframe>
-                                </div>
-                            @elseif(str_contains($aboutSection->video_url, 'storage/'))
-                                <div class="aspect-w-16 aspect-h-9">
-                                    <video 
-                                        class="w-full h-64 md:h-80" 
-                                        controls 
-                                        poster="{{ $aboutSection->background_image ? asset('storage/' . $aboutSection->background_image) : '' }}"
-                                    >
-                                        <source src="{{ asset('storage/' . $aboutSection->video_url) }}" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
-                                </div>
-                            @else
-                                <div class="w-full h-64 md:h-80 bg-green-100 flex items-center justify-center">
-                                    <div class="text-center">
-                                        <svg class="w-16 h-16 text-green-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-                                        </svg>
-                                        <p class="text-green-600 text-lg">{{ __('Video Not Available') }}</p>
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
+                        <a href="{{ route('about') }}" class="inline-flex items-center text-green-600 font-bold hover:text-green-700 transition duration-300">
+                            <span>{{ __('Learn More About Us') }}</span>
+                            <svg class="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
                     </div>
-                    @endif
                 </div>
                 
+                <!-- Column 2: Image -->
                 <div class="animate-fade-in">
                     @if($aboutSection->background_image)
                     <img src="{{ asset('storage/' . $aboutSection->background_image) }}" alt="About Us" class="w-full rounded-custom shadow-custom border-4 border-white">
@@ -197,6 +135,82 @@
                     </div>
                     @endif
                 </div>
+            </div>
+            
+            <!-- Video Display (Full Width Below) -->
+            @if($aboutSection->video_url)
+            <div class="mt-16 animate-fade-in">
+                <div class="text-center mb-10">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">{{ __('Our Story in Video') }}</h3>
+                </div>
+                <div class="max-w-4xl mx-auto bg-gray-900 rounded-custom overflow-hidden shadow-lg about-video-container border-4 border-white">
+                    <!-- Video content -->
+                    @php
+                        $videoUrl = $aboutSection->video_url;
+                        $embedUrl = '';
+                        
+                        if (str_contains($videoUrl, 'youtube.com/embed/')) {
+                            $embedUrl = $videoUrl;
+                        } elseif (str_contains($videoUrl, 'youtube.com/watch?v=')) {
+                            $videoId = substr($videoUrl, strpos($videoUrl, 'v=') + 2);
+                            if (str_contains($videoId, '&')) {
+                                $videoId = substr($videoId, 0, strpos($videoId, '&'));
+                            }
+                            $embedUrl = 'https://www.youtube.com/embed/' . $videoId;
+                        } elseif (str_contains($videoUrl, 'youtu.be/')) {
+                            $videoId = substr($videoUrl, strpos($videoUrl, 'youtu.be/') + 9);
+                            if (str_contains($videoId, '?')) {
+                                $videoId = substr($videoId, 0, strpos($videoId, '?'));
+                            }
+                            $embedUrl = 'https://www.youtube.com/embed/' . $videoId;
+                        } elseif (str_contains($videoUrl, 'vimeo.com/')) {
+                            $videoId = substr($videoUrl, strpos($videoUrl, 'vimeo.com/') + 10);
+                            if (str_contains($videoId, '?')) {
+                                $videoId = substr($videoId, 0, strpos($videoId, '?'));
+                            }
+                            $embedUrl = 'https://player.vimeo.com/video/' . $videoId;
+                        } elseif (str_contains($videoUrl, 'storage/')) {
+                            $embedUrl = null;
+                        } else {
+                            $embedUrl = $videoUrl;
+                        }
+                    @endphp
+                    
+                    @if($embedUrl)
+                        <div class="aspect-w-16 aspect-h-9">
+                            <iframe 
+                                src="{{ $embedUrl }}" 
+                                class="w-full h-64 md:h-96"
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen
+                                loading="lazy">
+                            </iframe>
+                        </div>
+                    @elseif(str_contains($aboutSection->video_url, 'storage/'))
+                        <div class="aspect-w-16 aspect-h-9">
+                            <video 
+                                class="w-full h-64 md:h-96" 
+                                controls 
+                                poster="{{ $aboutSection->background_image ? asset('storage/' . $aboutSection->background_image) : '' }}"
+                            >
+                                <source src="{{ asset('storage/' . $aboutSection->video_url) }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    @else
+                        <div class="w-full h-64 md:h-96 bg-green-100 flex items-center justify-center">
+                            <div class="text-center">
+                                <svg class="w-16 h-16 text-green-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
+                                <p class="text-green-600 text-lg">{{ __('Video Not Available') }}</p>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </div>
+            @endif
             </div>
         </div>
     </section>

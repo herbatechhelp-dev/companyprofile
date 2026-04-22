@@ -47,7 +47,10 @@ class CompanyInfoResource extends Resource
                         Forms\Components\Select::make('page')
                             ->label('Halaman')
                             ->options([
-                                'our-group' => 'Grup Kami',
+                                'background' => '[TENTANG] Latar Belakang',
+                                'our-group' => '[TENTANG] Info Grup',
+                                'value-chain' => '[TENTANG] Rantai Nilai',
+                                'org-structure' => '[TENTANG] Struktur Organisasi',
                                 'sustainability' => 'Keberlanjutan',
                                 'legal' => 'Legal',
                                 'certification' => 'Sertifikasi',
@@ -70,16 +73,39 @@ class CompanyInfoResource extends Resource
                         Forms\Components\Repeater::make('icons')
                             ->label('Ikon Informasi')
                             ->schema([
+                                Forms\Components\FileUpload::make('image')
+                                    ->label('Foto / Ilustrasi')
+                                    ->image()
+                                    ->directory('company-icons'),
                                 Forms\Components\TextInput::make('title')
-                                    ->label('Judul')
-                                    ->required(),
-                                Forms\Components\TextInput::make('icon') // bisa menggunakan heroicons
-                                    ->label('Ikon')
+                                    ->label('Judul / Nama')
                                     ->required(),
                                 Forms\Components\Textarea::make('description')
-                                    ->label('Deskripsi')
+                                    ->label('Deskripsi / Jabatan / Detail')
+                                    ->rows(3)
                                     ->required(),
+                                
+                                Forms\Components\Repeater::make('companies')
+                                    ->label('Daftar Perusahaan / Mitra')
+                                    ->schema([
+                                        Forms\Components\FileUpload::make('logo')
+                                            ->label('Logo Perusahaan')
+                                            ->image()
+                                            ->directory('company-logos')
+                                            ->columnSpan(1),
+                                        Forms\Components\TextInput::make('name')
+                                            ->label('Nama Perusahaan')
+                                            ->required()
+                                            ->columnSpan(2),
+                                    ])
+                                    ->columns(3)
+                                    ->itemLabel(fn (array $state): ?string => $state['name'] ?? null)
+                                    ->collapsible()
+                                    ->collapsed(),
                             ])
+                            ->helperText('Catatan: Untuk halaman Rantai Nilai, disarankan mengisi tepat 3 item (Upstream, Midstream, Downstream) agar tampilan tetap optimal.')
+                            ->columns(1)
+                            ->itemLabel(fn (array $state): ?string => $state['title'] ?? null)
                             ->columnSpanFull(),
                     ]),
             ]);

@@ -48,7 +48,7 @@
     ];
 @endphp
 
-<section class="relative overflow-hidden hero-banner {{ $heightClasses[$height] }}" data-animation="{{ $animation }}">
+<section class="relative overflow-hidden hero-banner -mt-24 {{ $heightClasses[$height] }}" data-animation="{{ $animation }}">
     <!-- Background Layer -->
     <div class="absolute inset-0 z-0">
         @if($backgroundVideo)

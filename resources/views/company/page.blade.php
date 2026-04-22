@@ -79,37 +79,114 @@
                     </div>
                 </div>
 
-                <!-- Icons Section with Enhanced Design -->
+                <!-- Enhanced Icons / Visualization Section -->
                 @php
                     $icons = $companyInfo->icons ?? [];
+                    $pageType = $companyInfo->page;
                 @endphp
-
+    
                 @if(is_array($icons) && count($icons) > 0)
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-                        @foreach($icons as $index => $icon)
-                            @if(is_array($icon) && isset($icon['title']) && isset($icon['description']))
-                                <div class="group text-center p-8 bg-gradient-to-br from-white to-green-50 rounded-2xl border border-green-100 hover:shadow-soft-xl transition-all duration-500 transform hover:-translate-y-3">
-                                    <!-- Animated Icon Container -->
+                    @if($pageType === 'org-structure')
+                        <!-- DESIGN: Organizational Structure (Team Cards) -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-20 px-4">
+                            @foreach($icons as $icon)
+                                <div class="group flex flex-col items-center" data-aos="fade-up">
                                     <div class="relative mb-6">
-                                        <div class="absolute inset-0 bg-green-100 rounded-full transform scale-0 group-hover:scale-100 transition-transform duration-500"></div>
-                                        <div class="relative w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-lg group-hover:shadow-xl transition-all duration-500">
-                                            <svg class="w-8 h-8 text-white transform group-hover:scale-110 transition-transform duration-500" 
-                                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                            </svg>
+                                        <!-- Ring Decoration -->
+                                        <div class="absolute -inset-2 bg-gradient-to-tr from-green-500 to-emerald-400 rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
+                                        <!-- Photo Container -->
+                                        <div class="relative w-40 h-40 rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:shadow-2xl transition-all duration-500 transform group-hover:scale-105">
+                                            @if(!empty($icon['image']))
+                                                <img src="{{ asset('storage/' . $icon['image']) }}" class="w-full h-full object-cover">
+                                            @else
+                                                <div class="w-full h-full bg-gradient-to-br from-green-50 to-emerald-50 flex items-center justify-center">
+                                                    <svg class="w-16 h-16 text-green-200" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                                                    </svg>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
-                                    
-                                    <h3 class="text-xl font-bold text-gray-800 mb-4 group-hover:text-green-700 transition-colors duration-300">
-                                        {{ $icon['title'] }}
-                                    </h3>
-                                    <p class="text-gray-600 leading-relaxed text-justify group-hover:text-gray-700 transition-colors duration-300">
-                                        {{ $icon['description'] }}
-                                    </p>
+                                    <div class="text-center">
+                                        <h3 class="text-xl font-bold text-gray-800 mb-1 group-hover:text-green-600 transition-colors duration-300">
+                                            {{ $icon['title'] }}
+                                        </h3>
+                                        <p class="text-green-600 font-semibold text-sm uppercase tracking-wider mb-2">
+                                            {{ $icon['description'] }}
+                                        </p>
+                                        <div class="w-8 h-1 bg-green-200 mx-auto rounded-full group-hover:w-16 transition-all duration-500"></div>
+                                    </div>
                                 </div>
-                            @endif
-                        @endforeach
-                    </div>
+                            @endforeach
+                        </div>
+                    @elseif($pageType === 'value-chain')
+                        <!-- DESIGN: Value Chain (Upstream to Downstream Flow) -->
+                        <div class="space-y-12 mb-20 px-4">
+                            @foreach($icons as $index => $icon)
+                                <div class="relative flex flex-col md:flex-row items-center gap-8 group" data-aos="fade-left">
+                                    <!-- Connector Line (Desktop) -->
+                                    @if(!$loop->last)
+                                        <div class="hidden md:block absolute left-10 top-20 bottom-0 w-1 bg-gradient-to-b from-green-500 to-transparent z-0 opacity-20"></div>
+                                    @endif
+                                    
+                                    <!-- Step Number/Icon -->
+                                    <div class="relative z-10 flex-shrink-0 w-20 h-20 bg-green-600 rounded-2xl shadow-lg flex items-center justify-center text-white text-3xl font-bold transform group-hover:rotate-6 transition-transform duration-500">
+                                        {{ $index + 1 }}
+                                    </div>
+                                    
+                                    <!-- Content Card -->
+                                    <div class="flex-1 bg-white rounded-3xl p-8 shadow-soft border border-green-50 hover:border-green-200 transition-all duration-500 group-hover:shadow-soft-xl">
+                                        <div class="flex flex-col lg:flex-row gap-6 items-center lg:items-start">
+                                            @if(!empty($icon['image']))
+                                                <div class="w-full lg:w-48 h-32 rounded-xl overflow-hidden flex-shrink-0">
+                                                    <img src="{{ asset('storage/' . $icon['image']) }}" class="w-full h-full object-cover">
+                                                </div>
+                                            @endif
+                                            <div>
+                                                <h3 class="text-2xl font-bold text-gray-800 mb-3 group-hover:text-green-600 transition-colors duration-300">
+                                                    {{ $icon['title'] }}
+                                                </h3>
+                                                <p class="text-gray-600 leading-relaxed text-lg">
+                                                    {{ $icon['description'] }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <!-- DESIGN: Default Icons (Standard Grid) -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+                            @foreach($icons as $index => $icon)
+                                @if(is_array($icon) && isset($icon['title']) && isset($icon['description']))
+                                    <div class="group text-center p-8 bg-gradient-to-br from-white to-green-50 rounded-2xl border border-green-100 hover:shadow-soft-xl transition-all duration-500 transform hover:-translate-y-3">
+                                        <!-- Animated Icon Container -->
+                                        <div class="relative mb-6">
+                                            <div class="absolute inset-0 bg-green-100 rounded-full transform scale-0 group-hover:scale-100 transition-transform duration-500"></div>
+                                            <div class="relative w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-lg group-hover:shadow-xl transition-all duration-500">
+                                                @if(!empty($icon['image']))
+                                                    <img src="{{ asset('storage/' . $icon['image']) }}" class="w-12 h-12 object-contain filter brightness-0 invert">
+                                                @else
+                                                    <svg class="w-8 h-8 text-white transform group-hover:scale-110 transition-transform duration-500" 
+                                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                                    </svg>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        
+                                        <h3 class="text-xl font-bold text-gray-800 mb-4 group-hover:text-green-700 transition-colors duration-300">
+                                            {{ $icon['title'] }}
+                                        </h3>
+                                        <p class="text-gray-600 leading-relaxed text-justify group-hover:text-gray-700 transition-colors duration-300">
+                                            {{ $icon['description'] }}
+                                        </p>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                    @endif
                 @endif
 
                 <!-- Additional Content with Elegant Design -->

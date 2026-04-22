@@ -93,7 +93,7 @@ class PageController extends Controller
     public function companyPage($page)
     {
         // Validasi page
-        if (!in_array($page, ['our-group', 'sustainability', 'legal', 'certification'])) {
+        if (!in_array($page, ['background', 'our-group', 'value-chain', 'org-structure', 'sustainability', 'legal', 'certification'])) {
             abort(404);
         }
 
@@ -109,6 +109,25 @@ class PageController extends Controller
         $pageTitle = str_replace('-', ' ', ucfirst($page));
         
         return view('company.page', compact('companyInfo', 'pageTitle', 'heroSection'));
+    }
+
+    public function aboutUs()
+    {
+        $background = CompanyInfo::where('page', 'background')->first();
+        $ourGroup = CompanyInfo::where('page', 'our-group')->first();
+        $valueChain = CompanyInfo::where('page', 'value-chain')->first();
+        $orgStructure = CompanyInfo::where('page', 'org-structure')->first();
+        
+        // Hero section default menggunakan background
+        $heroSection = HomeSection::where('section', 'background')->first();
+        
+        return view('company.about', compact(
+            'background', 
+            'ourGroup', 
+            'valueChain', 
+            'orgStructure',
+            'heroSection'
+        ));
     }
 
     public function industry(Request $request)
