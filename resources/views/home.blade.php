@@ -79,13 +79,8 @@
     </section>
 
     <!-- Section Divider -->
-    <div class="relative bg-gradient-to-r from-green-500 to-emerald-500">
-        <div class="absolute inset-0 flex items-center" aria-hidden="true">
-            <div class="w-full border-t border-white/30"></div>
-        </div>
-        <div class="relative flex justify-center py-4">
-            <span class="bg-green-500 px-6 py-2 text-white rounded-full text-sm font-semibold shadow-lg">{{ __('About Us') }}</span>
-        </div>
+    <div class="relative bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center h-8 md:h-10">
+        <div class="w-full border-t border-white/30"></div>
     </div>
 
     <!-- About Section - Hijau Muda -->
@@ -216,31 +211,8 @@
     </section>
 
     <!-- Section Divider -->
-    <div class="relative bg-gradient-to-r from-emerald-500 to-green-600">
-        <div class="container mx-auto px-4 py-6">
-            <div class="text-center">
-                <div class="flex flex-wrap items-center justify-center gap-4 md:gap-8 text-white">
-                    <div class="flex items-center space-x-2">
-                        <div class="w-3 h-3 bg-white rounded-full"></div>
-                        <span class="font-semibold text-sm md:text-base">About</span>
-                    </div>
-                    <svg class="w-4 h-4 hidden md:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                    <div class="flex items-center space-x-2">
-                        <div class="w-3 h-3 bg-green-200 rounded-full"></div>
-                        <span class="font-semibold text-sm md:text-base">Vision & Mission</span>
-                    </div>
-                    <svg class="w-4 h-4 hidden md:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                    <div class="flex items-center space-x-2">
-                        <div class="w-3 h-3 bg-green-300 rounded-full"></div>
-                        <span class="font-semibold text-sm md:text-base">Products</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="relative bg-gradient-to-r from-emerald-500 to-green-600 flex items-center justify-center h-8 md:h-10">
+        <div class="w-full border-t border-white/30"></div>
     </div>
     @endif
 
@@ -313,9 +285,9 @@
                                 @foreach($missionInfo->icons as $index => $icon)
                                     <div class="flex items-start text-green-600">
                                         <span class="min-w-6 h-6 bg-green-100 text-green-700 rounded-full flex items-center justify-center text-sm font-semibold mr-3 mt-0.5">{{ $index + 1 }}</span>
-                                        <div class="text-gray-700 text-justify">
+                                        <div class="text-gray-700 text-justify font-normal [&_strong]:font-normal [&_b]:font-normal">
                                             @if(!empty($icon['title']))
-                                                <strong>{{ $icon['title'] }}</strong> 
+                                                <span>{{ $icon['title'] }}</span> 
                                             @endif
                                             {!! $icon['description'] !!}
                                         </div>
@@ -400,7 +372,7 @@
     @endphp
     
     @if($taglineInfo || true) <!-- Akan kita tampilkan default statis jika kosong -->
-    <div class="w-full relative overflow-hidden py-24 md:py-32">
+    <div class="w-full relative overflow-hidden py-8 md:py-12">
         <!-- Background & Overlay -->
         @php
             $bgImage = ($taglineInfo && $taglineInfo->banner_image) ? asset('storage/'.$taglineInfo->banner_image) : asset('storage/company/factory-banner.jpg');
@@ -411,17 +383,17 @@
         
         <div class="relative px-6 text-center flex flex-col items-center justify-center">
             
-            <div class="relative inline-block max-w-4xl mx-auto py-12 px-10 md:px-20">
+            <div class="relative inline-block max-w-4xl mx-auto py-6 px-10 md:px-20">
                 <!-- Custom Quote Borders -->
-                <div class="absolute top-0 left-0 w-16 h-16 border-t-2 border-l-2 border-white/60 rounded-tl-xl"></div>
-                <div class="absolute bottom-0 right-0 w-16 h-16 border-b-2 border-r-2 border-white/60 rounded-br-xl"></div>
-                <div class="absolute bottom-0 left-0 w-16 h-16 border-b-2 border-l-2 border-white/60 rounded-bl-xl hidden md:block"></div>
-                <div class="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-white/60 rounded-tr-xl hidden md:block"></div>
+                <div class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-white/60 rounded-tl-xl"></div>
+                <div class="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-white/60 rounded-br-xl"></div>
+                <div class="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-white/60 rounded-bl-xl hidden md:block"></div>
+                <div class="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-white/60 rounded-tr-xl hidden md:block"></div>
                 
                 <!-- Quotation Marks -->
-                <div class="absolute top-0 left-4 md:left-12 -translate-y-[45%] text-7xl md:text-8xl font-serif text-white/80 leading-none tracking-tighter" style="text-shadow: 2px 2px 10px rgba(0,0,0,0.3);">“</div>
+                <div class="absolute top-0 left-4 md:left-12 -translate-y-[25%] text-5xl md:text-6xl font-serif text-white/80 leading-none tracking-tighter" style="text-shadow: 2px 2px 10px rgba(0,0,0,0.3);">“</div>
                 
-                <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-widest uppercase text-white drop-shadow-xl" style="line-height: 1.4;">
+                <h2 class="text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-widest uppercase text-white drop-shadow-xl" style="line-height: 1.4;">
                     @if($taglineInfo && $taglineInfo->title)
                         {!! nl2br(e($taglineInfo->title)) !!}
                     @else
@@ -429,7 +401,7 @@
                     @endif
                 </h2>
                 
-                <div class="absolute bottom-0 right-4 md:right-12 translate-y-[35%] text-7xl md:text-8xl font-serif text-white/80 leading-none rotate-180 tracking-tighter" style="text-shadow: 2px 2px 10px rgba(0,0,0,0.3);">“</div>
+                <div class="absolute bottom-0 right-4 md:right-12 translate-y-[15%] text-5xl md:text-6xl font-serif text-white/80 leading-none rotate-180 tracking-tighter" style="text-shadow: 2px 2px 10px rgba(0,0,0,0.3);">“</div>
             </div>
 
         </div>
@@ -443,20 +415,8 @@
 
     @if($services->count() > 0)
     <!-- Section Divider Layanan -->
-    <div class="relative bg-gradient-to-r from-emerald-600 to-green-700">
-        <div class="container mx-auto px-4 py-8">
-            <div class="text-center">
-                <div class="inline-flex flex-wrap items-center justify-center gap-3 text-white bg-black/20 px-8 py-3.5 rounded-full shadow-lg">
-                    <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                    </svg>
-                    <span class="font-semibold text-base md:text-lg tracking-wide text-center">{{ __('Layanan Unggulan Kami') }}</span>
-                    <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                    </svg>
-                </div>
-            </div>
-        </div>
+    <div class="relative bg-gradient-to-r from-emerald-600 to-green-700 flex items-center justify-center h-8 md:h-10">
+        <div class="w-full border-t border-white/30"></div>
     </div>
 
     <!-- JSON data untuk modal (diakses JS) -->
@@ -576,20 +536,8 @@
 
     @if($materials->count() > 0)
     <!-- Section Divider Bahan -->
-    <div class="relative bg-gradient-to-r from-green-700 to-emerald-700">
-        <div class="container mx-auto px-4 py-8">
-            <div class="text-center">
-                <div class="inline-flex flex-wrap items-center justify-center gap-3 text-white bg-black/20 px-8 py-3.5 rounded-full shadow-lg">
-                    <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
-                    </svg>
-                    <span class="font-semibold text-base md:text-lg tracking-wide text-center">{{ __('Produk yang Kami Hasilkan') }}</span>
-                    <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
-                    </svg>
-                </div>
-            </div>
-        </div>
+    <div class="relative bg-gradient-to-r from-green-700 to-emerald-700 flex items-center justify-center h-8 md:h-10">
+        <div class="w-full border-t border-white/30"></div>
     </div>
 
     <section id="materials" class="py-14 bg-gray-50">
@@ -631,9 +579,9 @@
 
                     @if($useLargeCards)
                     {{-- ===== LARGE CARD GRID (<=5 items) ===== --}}
-                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                    <div class="flex flex-wrap justify-center gap-4">
                         @foreach($material->items as $item)
-                        <div class="group bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100
+                        <div class="w-[calc(50%-0.5rem)] sm:w-[calc(33.333%-0.667rem)] md:w-[calc(25%-0.75rem)] lg:w-[calc(20%-0.8rem)] group bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100
                                     hover:shadow-md hover:border-green-200 transition-all duration-300">
                             <div class="aspect-square overflow-hidden bg-gray-50">
                                 @if(!empty($item['image']))
@@ -666,9 +614,9 @@
 
                     @else
                     {{-- ===== HORIZONTAL THUMBNAIL GRID (>5 items) ===== --}}
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                    <div class="flex flex-wrap justify-center gap-3">
                         @foreach($material->items as $item)
-                        <div class="group flex items-center gap-3 bg-white rounded-xl p-3
+                        <div class="w-full sm:w-[calc(50%-0.375rem)] md:w-[calc(33.333%-0.5rem)] group flex items-center gap-3 bg-white rounded-xl p-3
                                     shadow-sm border border-gray-100
                                     hover:shadow-md hover:border-green-200 transition-all duration-300">
                             <div class="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-gray-50 border border-gray-100">
@@ -720,20 +668,8 @@
 
     @if($advantages->count() > 0)
     <!-- Section Divider Mengapa Harus Kami -->
-    <div class="relative bg-gradient-to-r from-emerald-600 to-green-700">
-        <div class="container mx-auto px-4 py-8">
-            <div class="text-center">
-                <div class="inline-flex flex-wrap items-center justify-center gap-3 text-white bg-black/20 px-8 py-3.5 rounded-full shadow-lg">
-                    <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                    </svg>
-                    <span class="font-semibold text-base md:text-lg tracking-wide text-center">{{ __('Mengapa Memilih Kami?') }}</span>
-                    <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                    </svg>
-                </div>
-            </div>
-        </div>
+    <div class="relative bg-gradient-to-r from-emerald-600 to-green-700 flex items-center justify-center h-8 md:h-10">
+        <div class="w-full border-t border-white/30"></div>
     </div>
 
     <section id="why-choose-us" class="py-16 bg-white relative">
@@ -784,16 +720,16 @@
             </h3>
         </div>
 
-        <div class="marquee-wrapper items-center">
+        <div class="marquee-wrapper flex overflow-hidden w-full group py-4">
             @php
                 $repeatCount = 4;
             @endphp
             @for ($i = 0; $i < $repeatCount; $i++)
-            <div class="animate-marquee flex items-center gap-16 sm:gap-24 px-8 sm:px-16" {!! $i > 0 ? 'aria-hidden="true"' : '' !!}>
+            <div class="animate-marquee flex-shrink-0 flex items-center gap-16 sm:gap-24 px-8 sm:px-16 min-w-full justify-around" {!! $i > 0 ? 'aria-hidden="true"' : '' !!}>
                 @foreach($partners as $partner)
                 <div class="flex-shrink-0 transition-all duration-500 hover:scale-105">
                     <img src="{{ asset('storage/' . $partner->logo) }}" alt="{{ $partner->name }}" 
-                         class="h-10 sm:h-12 md:h-14 w-auto object-contain transition-all duration-300">
+                         class="h-14 sm:h-16 md:h-20 w-auto object-contain transition-all duration-300 grayscale hover:grayscale-0">
                 </div>
                 @endforeach
             </div>
@@ -802,20 +738,8 @@
     </div>
     @endif
 
-    <div class="relative bg-gradient-to-r from-green-600 to-emerald-600">
-        <div class="container mx-auto px-4 py-8">
-            <div class="text-center">
-                <div class="inline-flex flex-wrap items-center justify-center gap-3 rounded-full bg-black/20 px-8 py-3.5 text-white shadow-lg">
-                    <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h10"></path>
-                    </svg>
-                    <span class="text-center text-base font-semibold tracking-wide md:text-lg">{{ __('Alur Maklon') }}</span>
-                    <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h10"></path>
-                    </svg>
-                </div>
-            </div>
-        </div>
+    <div class="relative bg-gradient-to-r from-green-600 to-emerald-600 flex items-center justify-center h-8 md:h-10">
+        <div class="w-full border-t border-white/30"></div>
     </div>
 
     <!-- Section Alur Maklon -->
@@ -883,20 +807,8 @@
     </section>
 
     <!-- Section Divider Produk -->
-    <div class="relative bg-gradient-to-r from-green-600 to-emerald-600">
-        <div class="container mx-auto px-4 py-8">
-            <div class="text-center">
-                <div class="inline-flex flex-wrap items-center justify-center gap-3 text-white bg-black/20 px-8 py-3.5 rounded-full shadow-lg">
-                    <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                    <span class="font-semibold text-base md:text-lg tracking-wide text-center">{{ __('Temukan Produk Inovatif Kami') }}</span>
-                    <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </div>
-            </div>
-        </div>
+    <div class="relative bg-gradient-to-r from-green-600 to-emerald-600 flex items-center justify-center h-8 md:h-10">
+        <div class="w-full border-t border-white/30"></div>
     </div>
 
     <!-- Products Section - Hijau Tua -->
@@ -970,16 +882,8 @@
     </section>
 
     <!-- Section Divider -->
-    <div class="relative bg-gradient-to-r from-emerald-600 to-green-700 py-12">
-        <div class="container mx-auto px-4 text-center">
-            <svg class="w-12 h-12 mx-auto mb-4 text-white opacity-90" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z"/>
-            </svg>
-            <p class="text-xl md:text-2xl font-light italic text-white max-w-3xl mx-auto leading-relaxed">
-                "{{ __("Innovation and quality are at the heart of everything we do. We're committed to delivering products that make a difference.") }}"
-            </p>
-            <div class="mt-6 w-16 h-1 bg-white/80 mx-auto rounded-full"></div>
-        </div>
+    <div class="relative bg-gradient-to-r from-emerald-600 to-green-700 flex items-center justify-center h-8 md:h-10">
+        <div class="w-full border-t border-white/30"></div>
     </div>
     @endif
 
@@ -1085,19 +989,8 @@
     </section>
 
     <!-- Final Section Divider -->
-    <div class="relative bg-gradient-to-r from-green-700 to-emerald-800 py-12">
-        <div class="container mx-auto px-4">
-            <div class="text-center">
-                <div class="inline-flex items-center space-x-6 text-white">
-                    <div class="w-4 h-4 bg-green-300 rounded-full animate-pulse"></div>
-                    <div class="w-4 h-4 bg-green-400 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
-                    <div class="w-4 h-4 bg-green-500 rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
-                    <div class="w-4 h-4 bg-green-600 rounded-full animate-pulse" style="animation-delay: 0.6s"></div>
-                    <div class="w-4 h-4 bg-green-700 rounded-full animate-pulse" style="animation-delay: 0.8s"></div>
-                </div>
-                <p class="text-white/80 mt-4 font-semibold">{{ __('Thank you for visiting our website') }}</p>
-            </div>
-        </div>
+    <div class="relative bg-gradient-to-r from-green-700 to-emerald-800 flex items-center justify-center h-8 md:h-10">
+        <div class="w-full border-t border-white/30"></div>
     </div>
     @endif
 @endsection
@@ -1127,6 +1020,20 @@
     .animate-fade-in.visible {
         opacity: 1;
         transform: translateY(0);
+    }
+
+    /* Marquee Animation */
+    .animate-marquee {
+        animation: marquee 25s linear infinite;
+    }
+    
+    .marquee-wrapper:hover .animate-marquee {
+        animation-play-state: paused;
+    }
+
+    @keyframes marquee {
+        0% { transform: translateX(0%); }
+        100% { transform: translateX(-100%); }
     }
     
     /* Custom scroll behavior */

@@ -17,10 +17,10 @@
 @php
     // Height classes
     $heightClasses = [
-        'small' => 'py-12 md:py-16',
-        'medium' => 'py-20 md:py-24',
-        'large' => 'py-32 md:py-40',
-        'full' => 'min-h-screen flex items-center justify-center'
+        'small' => 'pt-32 pb-12 md:pt-40 md:pb-16',
+        'medium' => 'pt-36 pb-20 md:pt-44 md:pb-24',
+        'large' => 'pt-44 pb-32 md:pt-56 md:pb-40',
+        'full' => 'min-h-screen flex items-center justify-center pt-24 md:pt-32'
     ];
     
     // Overlay classes
