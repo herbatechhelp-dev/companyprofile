@@ -109,7 +109,7 @@
                 <div class="text-center mb-20" data-aos="fade-up">
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">{{ $valueChain->title }}</h2>
                     <div class="w-24 h-1 bg-green-500 mx-auto rounded-full mb-6"></div>
-                    <p class="text-gray-500 max-w-2xl mx-auto">{{ $valueChain->description }}</p>
+                    <div class="text-gray-500 max-w-2xl mx-auto">{!! $valueChain->description !!}</div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20 px-4 relative">
