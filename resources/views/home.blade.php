@@ -237,12 +237,13 @@
                 <p class="text-xl text-gray-600 max-w-2xl mx-auto">Our guiding principles and future aspirations</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start mb-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch mb-12">
                 <!-- Vision -->
-                <div class="animate-fade-in">
-                    <div class="bg-white rounded-custom shadow-custom p-8 hover:shadow-xl transition duration-300 transform hover:-translate-y-1 border-l-4 border-green-500">
-                        <div class="flex items-center mb-6">
-                            <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mr-4 shadow-lg">
+                <div class="animate-fade-in h-full flex">
+                    <div class="bg-white rounded-custom shadow-custom p-8 hover:shadow-xl transition duration-300 border-l-4 border-green-500 h-full flex flex-col w-full"
+                         x-data="{ expanded: false }">
+                        <div class="flex items-center mb-6 flex-shrink-0">
+                            <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mr-4 shadow-lg flex-shrink-0">
                                 <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
@@ -250,118 +251,146 @@
                             </div>
                             <h3 class="text-3xl font-bold text-gray-800">{{ $visionInfo ? $visionInfo->title : 'Visi' }}</h3>
                         </div>
-                        <div class="text-gray-600 leading-relaxed text-lg text-justify">
-                            @if($visionInfo)
-                                {!! $visionInfo->description !!}
-                            @else
-                                <p>“Menjadi perusahaan Manufacture produk kesehatan terbaik berskala internasional yang terpercaya dalam menyediakan produk dengan kualitas terbaik, aman, halal serta ramah lingkungan melalui proses produksi yang dikelola secara profesional dengan inovasi berkelanjutan.</p>
-                            @endif
+
+                        {{-- Content with expand/collapse --}}
+                        <div class="relative flex-1">
+                            <div class="text-gray-600 leading-relaxed text-lg text-justify overflow-hidden transition-all duration-500"
+                                 :style="expanded ? 'max-height: 2000px' : 'max-height: 200px'">
+                                @if($visionInfo)
+                                    {!! $visionInfo->description !!}
+                                @else
+                                    <p>"Menjadi perusahaan Manufacture produk kesehatan terbaik berskala internasional yang terpercaya dalam menyediakan produk dengan kualitas terbaik, aman, halal serta ramah lingkungan melalui proses produksi yang dikelola secara profesional dengan inovasi berkelanjutan.</p>
+                                @endif
+                            </div>
+                            {{-- Gradient fade --}}
+                            <div class="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white to-transparent pointer-events-none transition-opacity duration-300"
+                                 :class="expanded ? 'opacity-0' : 'opacity-100'"></div>
                         </div>
+
+                        <button @click="expanded = !expanded"
+                                class="mt-4 flex items-center gap-1.5 text-sm font-semibold text-green-600 hover:text-green-800 transition-colors duration-200 flex-shrink-0 self-start">
+                            <span x-text="expanded ? 'Tutup' : 'Baca Selengkapnya'"></span>
+                        </button>
                     </div>
                 </div>
-                
+
                 <!-- Mission -->
-                <div class="animate-fade-in">
-                    <div class="bg-white rounded-custom shadow-custom p-8 hover:shadow-xl transition duration-300 transform hover:-translate-y-1 border-l-4 border-green-600">
-                        <div class="flex items-center mb-6">
-                            <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mr-4 shadow-lg">
+                <div class="animate-fade-in h-full flex">
+                    <div class="bg-white rounded-custom shadow-custom p-8 hover:shadow-xl transition duration-300 border-l-4 border-green-600 h-full flex flex-col w-full"
+                         x-data="{ expanded: false }">
+                        <div class="flex items-center mb-6 flex-shrink-0">
+                            <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mr-4 shadow-lg flex-shrink-0">
                                 <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                                 </svg>
                             </div>
                             <h3 class="text-3xl font-bold text-gray-800">{{ $missionInfo ? $missionInfo->title : 'Misi' }}</h3>
                         </div>
-                        <div class="text-gray-600 leading-relaxed text-lg text-justify">
-                            @if($missionInfo)
-                                {!! $missionInfo->description !!}
-                            @else
-                                <p>Beberapa dari Misi kami untuk menghasilkan produk yang berdaya guna dan bersaing secara Internasional :</p>
-                            @endif
+
+                        {{-- Content with expand/collapse --}}
+                        <div class="relative flex-1">
+                            <div class="overflow-hidden transition-all duration-500"
+                                 :style="expanded ? 'max-height: 2000px' : 'max-height: 200px'">
+                                <div class="text-gray-600 leading-relaxed text-lg text-justify">
+                                    @if($missionInfo)
+                                        {!! $missionInfo->description !!}
+                                    @else
+                                        <p>Beberapa dari Misi kami untuk menghasilkan produk yang berdaya guna dan bersaing secara Internasional :</p>
+                                    @endif
+                                </div>
+                                <div class="mt-4 space-y-3">
+                                    @if($missionInfo && !empty($missionInfo->icons))
+                                        @foreach($missionInfo->icons as $index => $icon)
+                                            <div class="flex items-start text-green-600">
+                                                <span class="min-w-6 h-6 bg-green-100 text-green-700 rounded-full flex items-center justify-center text-sm font-semibold mr-3 mt-0.5">{{ $index + 1 }}</span>
+                                                <div class="text-gray-700 text-justify font-normal [&_strong]:font-normal [&_b]:font-normal">
+                                                    @if(!empty($icon['title']))
+                                                        <span>{{ $icon['title'] }}</span>
+                                                    @endif
+                                                    {!! $icon['description'] !!}
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    @elseif(!$missionInfo)
+                                        @foreach([
+                                            'Berkomitmen terhadap penyediaan produk berkualitas, aman, halal dan ramah lingkungan.',
+                                            'Konsisten dalam penerapan sistem manajemen mutu (CPOTB, CPPOB, Halal Assurance System, ISO9001 & ISO22001) yang didukung oleh keunggulan teknologi dan kompetensi SDM yang terlibat.',
+                                            'Meningkatkan kerja sama dalam organisasi secara profesional.',
+                                            'Continuous improvement di segala aspek.',
+                                            'Melakukan inovasi produk secara berkelanjutan dengan pembaharuan teknologi dan sesuai kebutuhan pasar.',
+                                        ] as $i => $point)
+                                            <div class="flex items-start text-green-600">
+                                                <span class="min-w-6 h-6 bg-green-100 text-green-700 rounded-full flex items-center justify-center text-sm font-semibold mr-3 mt-0.5">{{ $i + 1 }}</span>
+                                                <p class="text-gray-700 text-justify">{{ $point }}</p>
+                                            </div>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                            {{-- Gradient fade --}}
+                            <div class="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white to-transparent pointer-events-none transition-opacity duration-300"
+                                 :class="expanded ? 'opacity-0' : 'opacity-100'"></div>
                         </div>
-                        
-                        <!-- Mission Points -->
-                        <div class="mt-6 space-y-3">
-                            @if($missionInfo && !empty($missionInfo->icons))
-                                @foreach($missionInfo->icons as $index => $icon)
-                                    <div class="flex items-start text-green-600">
-                                        <span class="min-w-6 h-6 bg-green-100 text-green-700 rounded-full flex items-center justify-center text-sm font-semibold mr-3 mt-0.5">{{ $index + 1 }}</span>
-                                        <div class="text-gray-700 text-justify font-normal [&_strong]:font-normal [&_b]:font-normal">
-                                            @if(!empty($icon['title']))
-                                                <span>{{ $icon['title'] }}</span> 
-                                            @endif
-                                            {!! $icon['description'] !!}
-                                        </div>
-                                    </div>
-                                @endforeach
-                            @elseif(!$missionInfo)
-                                <div class="flex items-start text-green-600">
-                                    <span class="min-w-6 h-6 bg-green-100 text-green-700 rounded-full flex items-center justify-center text-sm font-semibold mr-3 mt-0.5">1</span>
-                                    <p class="text-gray-700 text-justify">Berkomitmen terhadap penyediaan produk berkualitas, aman, halal dan ramah lingkungan.</p>
-                                </div>
-                                <div class="flex items-start text-green-600">
-                                    <span class="min-w-6 h-6 bg-green-100 text-green-700 rounded-full flex items-center justify-center text-sm font-semibold mr-3 mt-0.5">2</span>
-                                    <p class="text-gray-700 text-justify">Konsisten dalam penerapan sistem manajemen mutu (CPOTB, CPPOB, Halal Assurance System, ISO9001 & ISO22001) yang didukung oleh keunggulan teknologi dan kompetensi SDM yang terlibat.</p>
-                                </div>
-                                <div class="flex items-start text-green-600">
-                                    <span class="min-w-6 h-6 bg-green-100 text-green-700 rounded-full flex items-center justify-center text-sm font-semibold mr-3 mt-0.5">3</span>
-                                    <p class="text-gray-700 text-justify">Meningkatkan kerja sama dalam organisasi secara profesional</p>
-                                </div>
-                                <div class="flex items-start text-green-600">
-                                    <span class="min-w-6 h-6 bg-green-100 text-green-700 rounded-full flex items-center justify-center text-sm font-semibold mr-3 mt-0.5">4</span>
-                                    <p class="text-gray-700 text-justify">Continuous improvement di segala aspek.</p>
-                                </div>
-                                <div class="flex items-start text-green-600">
-                                    <span class="min-w-6 h-6 bg-green-100 text-green-700 rounded-full flex items-center justify-center text-sm font-semibold mr-3 mt-0.5">5</span>
-                                    <p class="text-gray-700 text-justify">Melakukan inovasi produk secara berkelanjutan dengan pembaharuan teknologi dan sesuai kebutuhan pasar.</p>
-                                </div>
-                            @endif
-                        </div>
+
+                        <button @click="expanded = !expanded"
+                                class="mt-4 flex items-center gap-1.5 text-sm font-semibold text-green-600 hover:text-green-800 transition-colors duration-200 flex-shrink-0 self-start">
+                            <span x-text="expanded ? 'Tutup' : 'Baca Selengkapnya'"></span>
+                        </button>
                     </div>
                 </div>
- 
-                 @if($cultureInfo)
-                 <!-- Corporate Culture -->
-                 <div class="animate-fade-in">
-                     <div class="bg-white rounded-custom shadow-custom p-8 hover:shadow-xl transition duration-300 transform hover:-translate-y-1 border-l-4 border-green-800">
-                         <div class="flex items-center mb-6">
-                             <div class="w-16 h-16 bg-green-800 rounded-full flex items-center justify-center mr-4 shadow-lg">
-                                 @if($cultureInfo->banner_image)
-                                     <img src="{{ asset('storage/'.$cultureInfo->banner_image) }}" class="w-10 h-10 object-contain rounded-full" alt="Culture">
-                                 @else
-                                     <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                                     </svg>
-                                 @endif
-                             </div>
-                             <h3 class="text-3xl font-bold text-gray-800">{{ $cultureInfo->title }}</h3>
-                         </div>
-                         
-                         <div class="text-gray-600 leading-relaxed text-lg text-justify font-medium mb-8">
-                             {!! $cultureInfo->description !!}
-                         </div>
-                         
-                         @if(!empty($cultureInfo->icons))
-                         <!-- Culture Points -->
-                         <div class="space-y-4">
-                             @foreach($cultureInfo->icons as $culturePoint)
-                                 @php
-                                     $initial = substr(strtoupper($culturePoint['title']), 0, 1);
-                                 @endphp
-                                 <div class="flex items-start">
-                                     <span class="min-w-10 h-10 bg-green-800 text-white rounded-full flex items-center justify-center font-bold text-lg mr-4 shadow-md flex-shrink-0 mt-0.5">{{ $initial }}</span>
-                                     <div class="text-gray-700 text-justify font-medium pt-1">
-                                         {!! $culturePoint['description'] !!}
-                                     </div>
-                                 </div>
-                             @endforeach
-                         </div>
-                         @endif
-                     </div>
-                 </div>
-                 @endif
+
+                @if($cultureInfo)
+                <!-- Corporate Culture -->
+                <div class="animate-fade-in h-full flex">
+                    <div class="bg-white rounded-custom shadow-custom p-8 hover:shadow-xl transition duration-300 border-l-4 border-green-800 h-full flex flex-col w-full"
+                         x-data="{ expanded: false }">
+                        <div class="flex items-center mb-6 flex-shrink-0">
+                            <div class="w-16 h-16 bg-green-800 rounded-full flex items-center justify-center mr-4 shadow-lg flex-shrink-0">
+                                @if($cultureInfo->banner_image)
+                                    <img src="{{ asset('storage/'.$cultureInfo->banner_image) }}" class="w-10 h-10 object-contain rounded-full" alt="Culture">
+                                @else
+                                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                                    </svg>
+                                @endif
+                            </div>
+                            <h3 class="text-3xl font-bold text-gray-800">{{ $cultureInfo->title }}</h3>
+                        </div>
+
+                        {{-- Content with expand/collapse --}}
+                        <div class="relative flex-1">
+                            <div class="overflow-hidden transition-all duration-500"
+                                 :style="expanded ? 'max-height: 2000px' : 'max-height: 200px'">
+                                <div class="text-gray-600 leading-relaxed text-lg text-justify font-medium mb-4">
+                                    {!! $cultureInfo->description !!}
+                                </div>
+                                @if(!empty($cultureInfo->icons))
+                                <div class="space-y-4">
+                                    @foreach($cultureInfo->icons as $culturePoint)
+                                        @php $initial = substr(strtoupper($culturePoint['title']), 0, 1); @endphp
+                                        <div class="flex items-start">
+                                            <span class="min-w-10 h-10 bg-green-800 text-white rounded-full flex items-center justify-center font-bold text-lg mr-4 shadow-md flex-shrink-0 mt-0.5">{{ $initial }}</span>
+                                            <div class="text-gray-700 text-justify font-medium pt-1">
+                                                {!! $culturePoint['description'] !!}
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                @endif
+                            </div>
+                            {{-- Gradient fade --}}
+                            <div class="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white to-transparent pointer-events-none transition-opacity duration-300"
+                                 :class="expanded ? 'opacity-0' : 'opacity-100'"></div>
+                        </div>
+
+                        <button @click="expanded = !expanded"
+                                class="mt-4 flex items-center gap-1.5 text-sm font-semibold text-green-800 hover:text-green-950 transition-colors duration-200 flex-shrink-0 self-start">
+                            <span x-text="expanded ? 'Tutup' : 'Baca Selengkapnya'"></span>
+                        </button>
+                    </div>
+                </div>
+                @endif
             </div>
-
-
 
         </div>
     </section>
@@ -471,10 +500,12 @@
         <div class="container mx-auto px-4">
             <!-- Section Header -->
             <div class="text-center mb-12" data-aos="fade-up">
-                <h2 class="text-4xl font-bold text-gray-800 mb-3">{{ __('Layanan Unggulan Kami') }}</h2>
+                <h2 class="text-4xl font-bold text-gray-800 mb-3">
+                    {{ App\Models\SiteSetting::getValue('services_title', 'Layanan Unggulan Kami') }}
+                </h2>
                 <div class="w-16 h-1 bg-amber-400 mx-auto mb-5"></div>
                 <p class="text-gray-600 max-w-2xl mx-auto text-base leading-relaxed">
-                    {{ __('Kami menawarkan berbagai solusi manufaktur kemasan yang dirancang khusus untuk memenuhi standar industri tertinggi.') }}
+                    {{ App\Models\SiteSetting::getValue('services_subtitle', 'Kami menawarkan berbagai solusi manufaktur kemasan yang dirancang khusus untuk memenuhi standar industri tertinggi.') }}
                 </p>
             </div>
 
@@ -545,7 +576,9 @@
 
             {{-- Section Header --}}
             <div class="text-center mb-10" data-aos="fade-up">
-                <h2 class="text-3xl font-bold text-green-700 mb-3">{{ __('Produk yang Kami Hasilkan') }}</h2>
+                <h2 class="text-3xl font-bold text-green-700 mb-3">
+                    {{ App\Models\SiteSetting::getValue('materials_title', 'Produk yang Kami Hasilkan') }}
+                </h2>
                 <div class="w-14 h-1 bg-green-600 mx-auto rounded-full"></div>
             </div>
 
@@ -676,9 +709,11 @@
         <div class="container mx-auto px-4 max-w-6xl">
             <!-- Section Header -->
             <div class="text-center mb-12" data-aos="fade-up">
-                <h2 class="text-3xl md:text-4xl font-bold text-green-800 mb-4">{{ __('Mengapa Harus Kami?') }}</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-green-800 mb-4">
+                    {{ App\Models\SiteSetting::getValue('why_us_title', 'Mengapa Harus Kami?') }}
+                </h2>
                 <p class="text-gray-500 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
-                    {{ __('Dedikasi kami pada kualitas dan inovasi menjadikan kami mitra manufaktur pilihan untuk pertumbuhan brand Anda.') }}
+                    {{ App\Models\SiteSetting::getValue('why_us_subtitle', 'Dedikasi kami pada kualitas dan inovasi menjadikan kami mitra manufaktur pilihan untuk pertumbuhan brand Anda.') }}
                 </p>
             </div>
 
@@ -716,7 +751,7 @@
         <!-- Section Title -->
         <div class="text-center mb-6 sm:mb-8">
             <h3 class="text-xs md:text-sm font-bold tracking-[0.2em] uppercase text-green-700">
-                {{ __('TELAH DIPERCAYA OLEH PERUSAHAAN TERNAMA') }}
+                {{ App\Models\SiteSetting::getValue('partners_title', 'TELAH DIPERCAYA OLEH PERUSAHAAN TERNAMA') }}
             </h3>
         </div>
 
@@ -762,9 +797,11 @@
         @endphp
         <div class="container mx-auto px-4 max-w-6xl">
             <div class="text-center mb-12" data-aos="fade-up">
-                <h2 class="text-3xl md:text-4xl font-bold text-green-800 mb-4">{{ __('Alur Maklon') }}</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-green-800 mb-4">
+                    {{ App\Models\SiteSetting::getValue('maklon_title', 'Alur Maklon') }}
+                </h2>
                 <p class="text-gray-500 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
-                    {{ __('Langkah-langkah kerjasama maklon kami agar proses produksi berjalan lancar dan sesuai kebutuhan brand Anda.') }}
+                    {{ App\Models\SiteSetting::getValue('maklon_subtitle', 'Langkah-langkah kerjasama maklon kami agar proses produksi berjalan lancar dan sesuai kebutuhan brand Anda.') }}
                 </p>
             </div>
 
@@ -773,9 +810,9 @@
                 <div class="relative mb-10 flex flex-wrap items-center justify-center gap-3 text-center md:mb-14">
                     <span class="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-emerald-700">
                         <span class="h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                        {{ __('Proses berjalan terarah') }}
+                        {{ App\Models\SiteSetting::getValue('maklon_badge', 'Proses berjalan terarah') }}
                     </span>
-                    <span class="text-sm text-gray-500">{{ __('Setiap tahap dirancang berurutan agar brand Anda bergerak dari ide ke produk jadi dengan kontrol yang jelas.') }}</span>
+                    <span class="text-sm text-gray-500">{{ App\Models\SiteSetting::getValue('maklon_badge_desc', 'Setiap tahap dirancang berurutan agar brand Anda bergerak dari ide ke produk jadi dengan kontrol yang jelas.') }}</span>
                 </div>
 
                 <div class="maklon-road relative mx-auto max-w-5xl">
