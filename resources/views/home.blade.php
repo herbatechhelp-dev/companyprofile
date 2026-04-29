@@ -732,7 +732,7 @@
                     </div>
                     <h3 class="text-lg font-bold text-gray-800 mb-3">{{ $adv->title }}</h3>
                     @if($adv->description)
-                        <p class="text-sm text-gray-500 leading-relaxed">{{ $adv->description }}</p>
+                        <p class="text-sm text-gray-500 leading-relaxed text-justify">{{ $adv->description }}</p>
                     @endif
                 </div>
                 @endforeach

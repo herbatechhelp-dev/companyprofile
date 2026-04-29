@@ -144,7 +144,7 @@
                                 <h3 class="text-xl font-bold text-gray-800 mb-4 group-hover:text-green-600 transition-colors duration-300">
                                     {{ $icon['title'] }}
                                 </h3>
-                                <p class="text-gray-500 leading-relaxed text-sm mb-8">
+                                <p class="text-gray-500 leading-relaxed text-sm mb-8 text-justify">
                                     {{ $icon['description'] }}
                                 </p>
 
@@ -208,7 +208,7 @@
                 <div class="text-center mb-20" data-aos="fade-up">
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">{{ $orgStructure->title }}</h2>
                     <div class="w-24 h-1 bg-green-600 mx-auto rounded-full mb-6"></div>
-                    <div class="prose prose-lg max-w-3xl mx-auto text-gray-600">
+                    <div class="prose prose-lg max-w-3xl mx-auto text-gray-600 text-justify">
                         {!! $orgStructure->description !!}
                     </div>
                 </div>
