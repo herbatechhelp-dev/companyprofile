@@ -214,9 +214,9 @@
                 </div>
 
                 @if(!empty($orgStructure->icons))
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 mb-20">
+                <div class="flex flex-wrap justify-center gap-12 mb-20">
                     @foreach($orgStructure->icons as $icon)
-                        <div class="group flex flex-col items-center" data-aos="fade-up">
+                        <div class="group flex flex-col items-center w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-2rem)]" data-aos="fade-up">
                             <div class="relative mb-8">
                                 <div class="absolute -inset-3 bg-gradient-to-tr from-green-500 to-emerald-400 rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
                                 <div class="relative w-48 h-48 rounded-full overflow-hidden border-8 border-white shadow-2xl group-hover:shadow-soft-xl transition-all duration-500 transform group-hover:scale-105">
