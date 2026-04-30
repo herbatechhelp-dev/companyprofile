@@ -83,7 +83,7 @@
                 <div class="flex flex-wrap justify-center gap-8">
                     @foreach($ourGroup->icons as $icon)
                         <div class="w-full md:w-[calc(33.333%-1.333rem)] bg-white p-8 rounded-2xl shadow-soft border border-green-100/50 hover:shadow-xl transition-all duration-300" data-aos="zoom-in">
-                            <div class="w-16 h-16 bg-green-50 rounded-xl flex items-center justify-center mb-6">
+                            <div class="w-16 h-16 bg-green-50 rounded-xl flex items-center justify-center mb-6 mx-auto">
                                 @if(!empty($icon['image']))
                                     <img src="{{ asset('storage/' . $icon['image']) }}" class="w-10 h-10 object-contain">
                                 @else
@@ -92,8 +92,8 @@
                                     </svg>
                                 @endif
                             </div>
-                            <h3 class="text-xl font-bold text-gray-800 mb-3">{{ $icon['title'] }}</h3>
-                            <p class="text-gray-600 leading-relaxed text-sm">{{ $icon['description'] }}</p>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3 text-center">{{ $icon['title'] }}</h3>
+                            <p class="text-gray-600 leading-relaxed text-sm text-justify">{{ $icon['description'] }}</p>
                         </div>
                     @endforeach
                 </div>
