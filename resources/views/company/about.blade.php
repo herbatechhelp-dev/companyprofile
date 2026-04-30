@@ -14,7 +14,7 @@
             overlay="dark"
             alignment="center"
             animation="slide-up"
-            :showScrollIndicator="true"
+            :showScrollIndicator="false"
             scrollTarget="#content-start"
         />
     @elseif($background && $background->banner_image)
@@ -25,7 +25,7 @@
             overlay="gradient"
             alignment="center"
             animation="slide-up"
-            :showScrollIndicator="true"
+            :showScrollIndicator="false"
             scrollTarget="#content-start"
         />
     @else
@@ -34,7 +34,7 @@
             height="medium"
             alignment="center"
             animation="fade"
-            :showScrollIndicator="true"
+            :showScrollIndicator="false"
             scrollTarget="#content-start"
         />
     @endif
@@ -80,9 +80,9 @@
                 </div>
 
                 @if(!empty($ourGroup->icons))
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="flex flex-wrap justify-center gap-8">
                     @foreach($ourGroup->icons as $icon)
-                        <div class="bg-white p-8 rounded-2xl shadow-soft border border-green-100/50 hover:shadow-xl transition-all duration-300" data-aos="zoom-in">
+                        <div class="w-full md:w-[calc(33.333%-1.333rem)] bg-white p-8 rounded-2xl shadow-soft border border-green-100/50 hover:shadow-xl transition-all duration-300" data-aos="zoom-in">
                             <div class="w-16 h-16 bg-green-50 rounded-xl flex items-center justify-center mb-6">
                                 @if(!empty($icon['image']))
                                     <img src="{{ asset('storage/' . $icon['image']) }}" class="w-10 h-10 object-contain">

@@ -42,10 +42,10 @@
 
             <!-- Products Grid -->
             @if($products->count() > 0)
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="flex flex-wrap justify-center gap-8">
                     @foreach($products as $product)
                         <a href="{{ route('products.detail', $product->slug) }}" 
-                           class="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+                           class="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.333rem)] group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
                             <!-- Product Image -->
                             <div class="h-64 overflow-hidden relative">
                                 @if($product->images->count() > 0)

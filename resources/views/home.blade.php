@@ -237,9 +237,9 @@
                 <p class="text-xl text-gray-600 max-w-2xl mx-auto">Our guiding principles and future aspirations</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch mb-12">
+            <div class="flex flex-wrap justify-center gap-8 items-stretch mb-12">
                 <!-- Vision -->
-                <div class="animate-fade-in h-full flex">
+                <div class="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.333rem)] animate-fade-in h-full flex">
                     <div class="bg-white rounded-custom shadow-custom p-8 hover:shadow-xl transition duration-300 border-l-4 border-green-500 h-full flex flex-col w-full"
                          x-data="{ expanded: false }">
                         <div class="flex items-center mb-6 flex-shrink-0">
@@ -275,7 +275,7 @@
                 </div>
 
                 <!-- Mission -->
-                <div class="animate-fade-in h-full flex">
+                <div class="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.333rem)] animate-fade-in h-full flex">
                     <div class="bg-white rounded-custom shadow-custom p-8 hover:shadow-xl transition duration-300 border-l-4 border-green-600 h-full flex flex-col w-full"
                          x-data="{ expanded: false }">
                         <div class="flex items-center mb-6 flex-shrink-0">
@@ -341,7 +341,7 @@
 
                 @if($cultureInfo)
                 <!-- Corporate Culture -->
-                <div class="animate-fade-in h-full flex">
+                <div class="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.333rem)] animate-fade-in h-full flex">
                     <div class="bg-white rounded-custom shadow-custom p-8 hover:shadow-xl transition duration-300 border-l-4 border-green-800 h-full flex flex-col w-full"
                          x-data="{ expanded: false }">
                         <div class="flex items-center mb-6 flex-shrink-0">
@@ -510,9 +510,9 @@
             </div>
 
             <!-- Grid 3 kolom light mint cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="flex flex-wrap justify-center gap-6">
                 @foreach($services as $service)
-                <div class="service-card group bg-emerald-50 rounded-2xl p-7
+                <div class="service-card group bg-emerald-50 rounded-2xl p-7 w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]
                             cursor-pointer select-none transition-all duration-300 text-center
                             hover:-translate-y-2 hover:shadow-xl hover:bg-white
                             border border-emerald-200 hover:border-green-400/60 shadow-sm"
@@ -718,21 +718,21 @@
             </div>
 
             <!-- Cards Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="flex flex-wrap justify-center gap-6">
                 @foreach($advantages as $adv)
-                <div class="bg-white rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-50 hover:shadow-[0_8px_30px_rgb(46,139,87,0.08)] transition-all duration-300 transform hover:-translate-y-1" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
-                    <div class="w-12 h-12 rounded-2xl bg-green-50 flex items-center justify-center mb-5 border border-green-100">
+                <div class="w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] flex flex-col items-center text-center bg-white rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-50 hover:shadow-[0_8px_30px_rgb(46,139,87,0.08)] transition-all duration-300 transform hover:-translate-y-1" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
+                    <div class="w-24 h-24 rounded-2xl bg-green-50 flex items-center justify-center mb-6 border border-green-100">
                         @if($adv->icon_image)
-                            <img src="{{ asset('storage/' . $adv->icon_image) }}" alt="{{ $adv->title }}" class="w-6 h-6 object-contain">
+                            <img src="{{ asset('storage/' . $adv->icon_image) }}" alt="{{ $adv->title }}" class="w-14 h-14 object-contain">
                         @else
-                            <svg class="w-6 h-6 text-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-12 h-12 text-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
                         @endif
                     </div>
-                    <h3 class="text-lg font-bold text-gray-800 mb-3">{{ $adv->title }}</h3>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">{{ $adv->title }}</h3>
                     @if($adv->description)
-                        <p class="text-sm text-gray-500 leading-relaxed text-justify">{{ $adv->description }}</p>
+                        <p class="text-base text-gray-500 leading-relaxed text-center">{{ $adv->description }}</p>
                     @endif
                 </div>
                 @endforeach
