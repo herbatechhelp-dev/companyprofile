@@ -44,8 +44,7 @@ class MaklonFlowStepResource extends Resource
                             ->required()
                             ->maxLength(255),
                         Forms\Components\RichEditor::make('description')
-                            ->label('Deskripsi Langkah')
-                            ->required(),
+                            ->label('Deskripsi Langkah'),
                         Forms\Components\TextInput::make('sort_order')
                             ->label('Urutan')
                             ->numeric()

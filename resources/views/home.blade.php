@@ -832,7 +832,9 @@
                                         </span>
                                     </div>
                                     <h4 class="relative mt-5 text-xl font-bold text-green-900">{{ $step['title'] }}</h4>
+                                    @if(!empty(trim($step['description'])))
                                     <p class="relative mt-3 text-sm leading-7 text-gray-600">{{ $step['description'] }}</p>
+                                    @endif
                                 </div>
                             </div>
                         </article>
