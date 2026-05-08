@@ -40,23 +40,6 @@
     @endif
 
     <div id="content-start">
-        
-        <!-- 1. Latar Belakang Section -->
-        @if($background)
-        <section class="py-20 bg-white relative overflow-hidden">
-            <div class="container mx-auto px-4 max-w-5xl">
-                <div class="text-center mb-12" data-aos="fade-up">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">{{ $background->title }}</h2>
-                    <div class="w-24 h-1 bg-green-500 mx-auto rounded-full"></div>
-                </div>
-                <div class="bg-white rounded-3xl shadow-soft p-8 md:p-12 border border-green-50" data-aos="fade-up">
-                    <div class="prose prose-lg max-w-none prose-green text-justify leading-relaxed">
-                        {!! $background->description !!}
-                    </div>
-                </div>
-            </div>
-        </section>
-        @endif
 
         <!-- 2. Tentang Grup Section -->
         @if($ourGroup)
@@ -152,22 +135,27 @@
                                 @if(!empty($icon['companies']))
                                     <div class="w-full pt-6 border-t border-green-50">
                                         <p class="text-[10px] font-bold text-green-600 uppercase tracking-widest mb-4">Unit Bisnis / Mitra</p>
-                                        <div class="flex flex-wrap justify-center gap-4">
-                                            @foreach($icon['companies'] as $company)
-                                                <div class="group/logo relative">
-                                                    <div class="w-12 h-12 bg-white rounded-xl shadow-sm border border-green-50 flex items-center justify-center p-2 hover:shadow-md hover:border-green-200 transition-all duration-300">
-                                                        @if(!empty($company['logo']))
-                                                            <img src="{{ asset('storage/' . $company['logo']) }}" alt="{{ $company['name'] }}" class="max-w-full max-h-full object-contain filter grayscale group-hover/logo:grayscale-0 transition-all duration-500">
-                                                        @else
-                                                            <span class="text-[8px] font-bold text-green-300 text-center uppercase">{{ $company['name'] }}</span>
-                                                        @endif
+                                        <div class="marquee-wrapper flex overflow-hidden w-full group py-2">
+                                            @php $repeatCount = count($icon['companies']) < 3 ? 4 : 2; @endphp
+                                            @for ($i = 0; $i < $repeatCount; $i++)
+                                            <div class="animate-marquee flex-shrink-0 flex items-center gap-6 px-4 min-w-full justify-around" {!! $i > 0 ? 'aria-hidden="true"' : '' !!}>
+                                                @foreach($icon['companies'] as $company)
+                                                    <div class="group/logo relative flex-shrink-0">
+                                                        <div class="w-20 h-20 sm:w-24 sm:h-24 bg-white rounded-xl shadow-sm border border-green-50 flex items-center justify-center p-3 hover:shadow-md hover:border-green-200 transition-all duration-300">
+                                                            @if(!empty($company['logo']))
+                                                                <img src="{{ asset('storage/' . $company['logo']) }}" alt="{{ $company['name'] }}" class="w-full h-full object-contain filter grayscale group-hover/logo:grayscale-0 transition-all duration-500">
+                                                            @else
+                                                                <span class="text-[9px] font-bold text-green-300 text-center uppercase">{{ $company['name'] }}</span>
+                                                            @endif
+                                                        </div>
+                                                        <!-- Tooltip -->
+                                                        <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-800 text-white text-[10px] rounded opacity-0 group-hover/logo:opacity-100 pointer-events-none transition-opacity duration-300 whitespace-nowrap z-30">
+                                                            {{ $company['name'] }}
+                                                        </div>
                                                     </div>
-                                                    <!-- Tooltip -->
-                                                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-800 text-white text-[10px] rounded opacity-0 group-hover/logo:opacity-100 pointer-events-none transition-opacity duration-300 whitespace-nowrap z-30">
-                                                        {{ $company['name'] }}
-                                                    </div>
-                                                </div>
-                                            @endforeach
+                                                @endforeach
+                                            </div>
+                                            @endfor
                                         </div>
                                     </div>
                                 @endif
