@@ -7,7 +7,7 @@
     @php
         $heroSection = App\Models\HomeSection::where('section', 'hero')->first();
         $logo = App\Models\SiteSetting::getLogo();
-        $companyName = App\Models\SiteSetting::getCompanyName();
+        $heroTitle = App\Models\SiteSetting::getValue('hero_title', App\Models\SiteSetting::getCompanyName());
         $tagline = App\Models\SiteSetting::getValue('tagline', 'Best Partner for Your Product');
         $heroBadge = App\Models\SiteSetting::getValue('hero_badge', 'Herba & Food Industry');
         $heroBtn1Text = App\Models\SiteSetting::getValue('hero_btn1_text', 'Jelajahi Produk');
@@ -35,25 +35,19 @@
         <!-- Gradient Overlay for Better Text Readability -->
         <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30"></div>
         
-        <!-- Content -->
         <div class="relative z-10 px-4 w-full max-w-4xl mx-auto hero-content flex justify-center items-center">
             <!-- Text Content Section - Center -->
             <div class="w-full text-center text-white">
-                <!-- Industry Badge -->
-                <div data-aos="fade-down" class="inline-flex items-center bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6 border border-white/30">
+                <!-- Company Name / Hero Title -->
+                <h1 data-aos="fade-up" data-aos-delay="100" class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight uppercase">
+                    {{ $heroTitle }}
+                </h1>
+
+                <!-- Industry Badge (Moved to bottom) -->
+                <div data-aos="fade-up" data-aos-delay="200" class="inline-flex items-center bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-8 border border-white/30">
                     <span class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
                     <span class="text-sm font-semibold tracking-wider">{{ $heroBadge }}</span>
                 </div>
-
-                <!-- Company Name -->
-                <h1 data-aos="fade-up" data-aos-delay="100" class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight uppercase">
-                    {{ $companyName }}
-                </h1>
-
-                <!-- Tagline -->
-                <p data-aos="fade-up" data-aos-delay="200" class="text-lg md:text-xl lg:text-2xl mb-8 leading-relaxed max-w-2xl mx-auto text-white/90">
-                    {{ $tagline }}
-                </p>
 
                 <!-- Buttons - Lebih Kecil -->
                 <div data-aos="zoom-in" data-aos-delay="300" class="flex flex-col sm:flex-row gap-3 justify-center items-center">
