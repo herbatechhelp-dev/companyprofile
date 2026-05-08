@@ -8,7 +8,12 @@
         $heroSection = App\Models\HomeSection::where('section', 'hero')->first();
         $logo = App\Models\SiteSetting::getLogo();
         $companyName = App\Models\SiteSetting::getCompanyName();
-        $tagline = App\Models\SiteSetting::getValue('tagline', 'Best Patner For Your Product');
+        $tagline = App\Models\SiteSetting::getValue('tagline', 'Best Partner for Your Product');
+        $heroBadge = App\Models\SiteSetting::getValue('hero_badge', 'Herba & Food Industry');
+        $heroBtn1Text = App\Models\SiteSetting::getValue('hero_btn1_text', 'Jelajahi Produk');
+        $heroBtn1Url = App\Models\SiteSetting::getValue('hero_btn1_url', route('industry'));
+        $heroBtn2Text = App\Models\SiteSetting::getValue('hero_btn2_text', 'Hubungi Kami');
+        $heroBtn2Url = App\Models\SiteSetting::getValue('hero_btn2_url', route('contact'));
     @endphp
     
     <section class="relative flex items-center justify-center overflow-hidden hero-section min-h-screen h-[100dvh]">
@@ -37,7 +42,7 @@
                 <!-- Industry Badge -->
                 <div data-aos="fade-down" class="inline-flex items-center bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6 border border-white/30">
                     <span class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
-                    <span class="text-sm font-semibold tracking-wider">{{ __('Herba & Food Industry') }}</span>
+                    <span class="text-sm font-semibold tracking-wider">{{ $heroBadge }}</span>
                 </div>
 
                 <!-- Company Name -->
@@ -47,19 +52,19 @@
 
                 <!-- Tagline -->
                 <p data-aos="fade-up" data-aos-delay="200" class="text-lg md:text-xl lg:text-2xl mb-8 leading-relaxed max-w-2xl mx-auto text-white/90">
-                    {{ __('Best Partner for Your Product') }}
+                    {{ $tagline }}
                 </p>
 
                 <!-- Buttons - Lebih Kecil -->
                 <div data-aos="zoom-in" data-aos-delay="300" class="flex flex-col sm:flex-row gap-3 justify-center items-center">
-                        <a href="{{ route('industry') }}" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-custom font-semibold transition-all duration-300 inline-flex items-center transform hover:scale-105 shadow-lg text-sm">
-                            <span>{{ __('Explore Products') }}</span>
+                        <a href="{{ $heroBtn1Url }}" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-custom font-semibold transition-all duration-300 inline-flex items-center transform hover:scale-105 shadow-lg text-sm">
+                            <span>{{ $heroBtn1Text }}</span>
                             <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7-7"></path>
                             </svg>
                         </a>
-                        <a href="{{ route('contact') }}" class="border-2 border-white hover:bg-white hover:text-green-600 text-white px-6 py-3 rounded-custom font-semibold transition-all duration-300 inline-flex items-center transform hover:scale-105 text-sm">
-                            <span>{{ __('Contact Us') }}</span>
+                        <a href="{{ $heroBtn2Url }}" class="border-2 border-white hover:bg-white hover:text-green-600 text-white px-6 py-3 rounded-custom font-semibold transition-all duration-300 inline-flex items-center transform hover:scale-105 text-sm">
+                            <span>{{ $heroBtn2Text }}</span>
                             <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
                             </svg>
