@@ -12,9 +12,15 @@ class Advantage extends Model
     protected $fillable = [
         'title',
         'description',
+        'points',
         'icon_image',
         'sort_order',
         'is_active',
+    ];
+
+    protected $casts = [
+        'points' => 'array',
+        'is_active' => 'boolean',
     ];
 
     public function scopeActive($query)

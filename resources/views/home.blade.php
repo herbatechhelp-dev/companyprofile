@@ -731,7 +731,21 @@
                     </div>
                     <h3 class="text-2xl font-bold text-gray-800 mb-4">{{ $adv->title }}</h3>
                     @if($adv->description)
-                        <p class="text-base text-gray-500 leading-relaxed text-justify">{{ $adv->description }}</p>
+                        <p class="text-base text-gray-500 leading-relaxed text-justify mb-4">{{ $adv->description }}</p>
+                    @endif
+                    @if($adv->points && count($adv->points) > 0)
+                        <ul class="text-left space-y-3 w-full">
+                            @foreach($adv->points as $pointItem)
+                                @if(!empty($pointItem['point']))
+                                <li class="flex items-start text-gray-600 text-sm md:text-base text-justify">
+                                    <svg class="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span>{{ $pointItem['point'] }}</span>
+                                </li>
+                                @endif
+                            @endforeach
+                        </ul>
                     @endif
                 </div>
                 @endforeach

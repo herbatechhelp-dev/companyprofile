@@ -55,6 +55,16 @@ class AdvantageResource extends Resource
                             ->nullable()
                             ->rows(3)
                             ->columnSpanFull(),
+                        Forms\Components\Repeater::make('points')
+                            ->label('Daftar Poin Keunggulan (Opsional)')
+                            ->schema([
+                                Forms\Components\TextInput::make('point')
+                                    ->label('Poin')
+                                    ->required()
+                            ])
+                            ->columnSpanFull()
+                            ->collapsible()
+                            ->itemLabel(fn (array $state): ?string => $state['point'] ?? null),
                     ])->columns(2),
 
                 Forms\Components\Section::make('Pengaturan')
