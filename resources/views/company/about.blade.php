@@ -51,8 +51,8 @@
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
-                    <div class="prose prose-lg max-w-none text-gray-600 text-justify" data-aos="fade-right">
-                        {!! $ourGroup->description !!}
+                    <div class="prose prose-lg max-w-none text-gray-600" style="text-align: justify !important;" data-aos="fade-right">
+                        {!! preg_replace('/text-align\s*:\s*\w+/i', 'text-align: justify', $ourGroup->description) !!}
                     </div>
                     @if($ourGroup->banner_image)
                     <div class="relative" data-aos="fade-left">
