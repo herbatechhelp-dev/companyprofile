@@ -67,7 +67,7 @@ class LandasanPerusahaanResource extends Resource
                             ->columnSpanFull(),
                         Forms\Components\RichEditor::make('description')
                             ->label('Deskripsi')
-                            ->required()
+                            ->nullable()
                             ->columnSpanFull(),
                         Forms\Components\Repeater::make('icons')
                             ->label('Daftar Poin (Cth: Poin Misi / Kultur PRI)')
