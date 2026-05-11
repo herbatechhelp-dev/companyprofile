@@ -338,5 +338,12 @@
         0%   { transform: translateX(0); }
         100% { transform: translateX(-50%); }
     }
+
+    /* Force text-justify pada deskripsi Tentang Grup */
+    .prose.text-justify *,
+    .prose.text-justify p,
+    .prose.text-justify li {
+        text-align: justify !important;
+    }
 </style>
 @endpush
