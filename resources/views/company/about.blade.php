@@ -133,30 +133,65 @@
 
                                 <!-- Companies/Partners Section -->
                                 @if(!empty($icon['companies']))
+                                    @php
+                                        $companyCount = count($icon['companies']);
+                                        $useMarquee = $companyCount > 2;
+                                    @endphp
                                     <div class="w-full pt-6 border-t border-green-50">
-                                        <p class="text-[10px] font-bold text-green-600 uppercase tracking-widest mb-4">Unit Bisnis / Mitra</p>
-                                        <div class="marquee-wrapper flex overflow-hidden w-full group py-2">
-                                            @php $repeatCount = count($icon['companies']) < 3 ? 4 : 2; @endphp
-                                            @for ($i = 0; $i < $repeatCount; $i++)
-                                            <div class="animate-marquee flex-shrink-0 flex items-center gap-6 px-4 min-w-full justify-around" {!! $i > 0 ? 'aria-hidden="true"' : '' !!}>
+                                        <p class="text-[10px] font-bold text-green-600 uppercase tracking-widest mb-3">Unit Bisnis / Mitra</p>
+
+                                        @if($useMarquee)
+                                            {{-- Marquee scrolling untuk logo > 2 --}}
+                                            <div class="card-marquee-wrapper overflow-hidden w-full">
+                                                <div class="card-marquee-track flex items-center gap-4">
+                                                    {{-- Copy 1 --}}
+                                                    @foreach($icon['companies'] as $company)
+                                                        <div class="group/logo relative flex-shrink-0">
+                                                            <div class="w-16 h-16 bg-white rounded-xl shadow-sm border border-green-50 flex items-center justify-center p-2 hover:shadow-md hover:border-green-200 transition-all duration-300">
+                                                                @if(!empty($company['logo']))
+                                                                    <img src="{{ asset('storage/' . $company['logo']) }}" alt="{{ $company['name'] }}" class="w-full h-full object-contain filter grayscale group-hover/logo:grayscale-0 transition-all duration-500">
+                                                                @else
+                                                                    <span class="text-[8px] font-bold text-green-300 text-center uppercase leading-tight">{{ $company['name'] }}</span>
+                                                                @endif
+                                                            </div>
+                                                            <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-800 text-white text-[10px] rounded opacity-0 group-hover/logo:opacity-100 pointer-events-none transition-opacity duration-300 whitespace-nowrap z-30">
+                                                                {{ $company['name'] }}
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                    {{-- Copy 2 (seamless loop) --}}
+                                                    @foreach($icon['companies'] as $company)
+                                                        <div class="group/logo relative flex-shrink-0" aria-hidden="true">
+                                                            <div class="w-16 h-16 bg-white rounded-xl shadow-sm border border-green-50 flex items-center justify-center p-2 hover:shadow-md hover:border-green-200 transition-all duration-300">
+                                                                @if(!empty($company['logo']))
+                                                                    <img src="{{ asset('storage/' . $company['logo']) }}" alt="{{ $company['name'] }}" class="w-full h-full object-contain filter grayscale group-hover/logo:grayscale-0 transition-all duration-500">
+                                                                @else
+                                                                    <span class="text-[8px] font-bold text-green-300 text-center uppercase leading-tight">{{ $company['name'] }}</span>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        @else
+                                            {{-- Static grid untuk logo ≤ 2 --}}
+                                            <div class="flex items-center justify-center gap-4">
                                                 @foreach($icon['companies'] as $company)
                                                     <div class="group/logo relative flex-shrink-0">
-                                                        <div class="w-20 h-20 sm:w-24 sm:h-24 bg-white rounded-xl shadow-sm border border-green-50 flex items-center justify-center p-3 hover:shadow-md hover:border-green-200 transition-all duration-300">
+                                                        <div class="w-16 h-16 bg-white rounded-xl shadow-sm border border-green-50 flex items-center justify-center p-2 hover:shadow-md hover:border-green-200 transition-all duration-300">
                                                             @if(!empty($company['logo']))
                                                                 <img src="{{ asset('storage/' . $company['logo']) }}" alt="{{ $company['name'] }}" class="w-full h-full object-contain filter grayscale group-hover/logo:grayscale-0 transition-all duration-500">
                                                             @else
-                                                                <span class="text-[9px] font-bold text-green-300 text-center uppercase">{{ $company['name'] }}</span>
+                                                                <span class="text-[8px] font-bold text-green-300 text-center uppercase leading-tight">{{ $company['name'] }}</span>
                                                             @endif
                                                         </div>
-                                                        <!-- Tooltip -->
                                                         <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-800 text-white text-[10px] rounded opacity-0 group-hover/logo:opacity-100 pointer-events-none transition-opacity duration-300 whitespace-nowrap z-30">
                                                             {{ $company['name'] }}
                                                         </div>
                                                     </div>
                                                 @endforeach
                                             </div>
-                                            @endfor
-                                        </div>
+                                        @endif
                                     </div>
                                 @endif
 
@@ -267,6 +302,41 @@
     }
     .prose-green blockquote {
         border-left-color: #10b981;
+    }
+
+    /* Marquee khusus logo Unit Bisnis/Mitra di kartu Rantai Nilai */
+    .card-marquee-wrapper {
+        position: relative;
+    }
+    .card-marquee-wrapper::before,
+    .card-marquee-wrapper::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 24px;
+        z-index: 2;
+        pointer-events: none;
+    }
+    .card-marquee-wrapper::before {
+        left: 0;
+        background: linear-gradient(to right, white, transparent);
+    }
+    .card-marquee-wrapper::after {
+        right: 0;
+        background: linear-gradient(to left, white, transparent);
+    }
+    .card-marquee-track {
+        display: flex;
+        width: max-content;
+        animation: card-marquee-scroll 8s linear infinite;
+    }
+    .card-marquee-wrapper:hover .card-marquee-track {
+        animation-play-state: paused;
+    }
+    @keyframes card-marquee-scroll {
+        0%   { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
     }
 </style>
 @endpush
