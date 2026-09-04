@@ -220,57 +220,6 @@
         </section>
         @endif
 
-        <!-- 4. Struktur Organisasi Section -->
-        @if($orgStructure)
-        <section class="py-24 bg-gradient-to-br from-green-50 to-white relative overflow-hidden">
-            <!-- Decorative Elements -->
-            <div class="absolute top-0 right-0 w-96 h-96 bg-green-100/50 rounded-full blur-3xl -mr-48 -mt-48"></div>
-            <div class="absolute bottom-0 left-0 w-96 h-96 bg-emerald-100/50 rounded-full blur-3xl -ml-48 -mb-48"></div>
-
-            <div class="container mx-auto px-4 max-w-6xl relative z-10">
-                <div class="text-center mb-20" data-aos="fade-up">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">{{ $orgStructure->title }}</h2>
-                    <div class="w-24 h-1 bg-green-600 mx-auto rounded-full mb-6"></div>
-                    <div class="prose prose-lg max-w-3xl mx-auto text-gray-600 text-justify">
-                        {!! $orgStructure->description !!}
-                    </div>
-                </div>
-
-                @if(!empty($orgStructure->icons))
-                <div class="flex flex-wrap justify-center gap-12 mb-20">
-                    @foreach($orgStructure->icons as $icon)
-                        <div class="group flex flex-col items-center w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-2rem)]" data-aos="fade-up">
-                            <div class="relative mb-8">
-                                <div class="absolute -inset-3 bg-gradient-to-tr from-green-500 to-emerald-400 rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
-                                <div class="relative w-48 h-48 rounded-full overflow-hidden border-8 border-white shadow-2xl group-hover:shadow-soft-xl transition-all duration-500 transform group-hover:scale-105">
-                                    @if(!empty($icon['image']))
-                                        <img src="{{ asset('storage/' . $icon['image']) }}" class="w-full h-full object-cover">
-                                    @else
-                                        <div class="w-full h-full bg-gradient-to-br from-green-50 to-emerald-50 flex items-center justify-center">
-                                            <svg class="w-20 h-20 text-green-100" fill="currentColor" viewBox="0 0 24 24">
-                                                <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                                            </svg>
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="text-center">
-                                <h3 class="text-2xl font-bold text-gray-800 mb-2 group-hover:text-green-600 transition-colors duration-300">
-                                    {{ $icon['title'] }}
-                                </h3>
-                                <div class="inline-block px-4 py-1.5 bg-green-100 text-green-700 text-sm font-bold uppercase tracking-wider rounded-full mb-4">
-                                    {{ $icon['description'] }}
-                                </div>
-                                <div class="w-8 h-1 bg-green-200 mx-auto rounded-full group-hover:w-20 transition-all duration-500"></div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-                @endif
-            </div>
-        </section>
-        @endif
-
         <!-- CTA Section -->
         <section class="py-20 bg-green-600">
             <div class="container mx-auto px-4 text-center">

@@ -116,7 +116,6 @@ class PageController extends Controller
         $background = CompanyInfo::where('page', 'background')->first();
         $ourGroup = CompanyInfo::where('page', 'our-group')->first();
         $valueChain = CompanyInfo::where('page', 'value-chain')->first();
-        $orgStructure = CompanyInfo::where('page', 'org-structure')->first();
         
         // Hero section default menggunakan background
         $heroSection = HomeSection::where('section', 'background')->first();
@@ -125,7 +124,6 @@ class PageController extends Controller
             'background', 
             'ourGroup', 
             'valueChain', 
-            'orgStructure',
             'heroSection'
         ));
     }
