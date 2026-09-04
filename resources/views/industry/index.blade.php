@@ -14,7 +14,7 @@
             overlay="dark"
             alignment="center"
             animation="slide-up"
-            :showScrollIndicator="true"
+            :showScrollIndicator="false"
             scrollTarget="#products"
             ctaText="{{ __('Explore Products') }}"
             ctaUrl="#products"
