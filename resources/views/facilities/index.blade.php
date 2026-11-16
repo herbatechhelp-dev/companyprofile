@@ -6,7 +6,6 @@
     @if($heroSection && ($heroSection->background_image || $heroSection->background_video))
         <x-hero-banner
             :title="$heroSection->title ?? __('Our Facilities')"
-            :subtitle="!$heroSection->content ? : ''"
             :content="$heroSection->content ?? ''"
             :backgroundImage="$heroSection->background_image"
             :backgroundVideo="$heroSection->background_video"
@@ -47,11 +46,11 @@
                             <!-- Facility Image -->
                             <div class="h-64 overflow-hidden relative">
                                 @if($facility->images->count() > 0)
-                                    <img src="{{ asset('storage/' . $facility->images->first()->image) }}" 
+                                    <img loading="lazy" decoding="async" src="{{ asset('storage/' . $facility->images->first()->image) }}" 
                                          alt="{{ $facility->name }}" 
                                          class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
                                 @elseif($facility->image)
-                                    <img src="{{ asset('storage/' . $facility->image) }}" 
+                                    <img loading="lazy" decoding="async" src="{{ asset('storage/' . $facility->image) }}" 
                                          alt="{{ $facility->name }}" 
                                          class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
                                 @else

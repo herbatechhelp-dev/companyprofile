@@ -7,7 +7,6 @@
     @if($heroSection && ($heroSection->background_image || $heroSection->background_video))
         <x-hero-banner
             :title="$heroSection->title ?? $companyInfo->title"
-            :subtitle="!$heroSection->content ? '' : ''"
             :content="$heroSection->content ?? ''"
             :backgroundImage="$heroSection->background_image"
             :backgroundVideo="$heroSection->background_video"
@@ -44,7 +43,7 @@
     <section id="content-start" class="py-20 bg-white relative overflow-hidden">
         <!-- Background Pattern -->
         <div class="absolute inset-0 opacity-5">
-            <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%2310b981\" fill-opacity=\"0.2\"%3E%3Ccircle cx=\"30\" cy=\"30\" r=\"2\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+            <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%2310b981%22 fill-opacity=%220.2%22%3E%3Ccircle cx=%2230%22 cy=%2230%22 r=%222%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
         </div>
 
         <div class="container mx-auto px-4 max-w-4xl relative z-10">
@@ -97,7 +96,7 @@
                                         <!-- Photo Container -->
                                         <div class="relative w-40 h-40 rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:shadow-2xl transition-all duration-500 transform group-hover:scale-105">
                                             @if(!empty($icon['image']))
-                                                <img src="{{ asset('storage/' . $icon['image']) }}" class="w-full h-full object-cover">
+                                                <img loading="lazy" decoding="async" src="{{ asset('storage/' . $icon['image']) }}" class="w-full h-full object-cover">
                                             @else
                                                 <div class="w-full h-full bg-gradient-to-br from-green-50 to-emerald-50 flex items-center justify-center">
                                                     <svg class="w-16 h-16 text-green-200" fill="currentColor" viewBox="0 0 24 24">
@@ -139,7 +138,7 @@
                                         <div class="flex flex-col lg:flex-row gap-6 items-center lg:items-start">
                                             @if(!empty($icon['image']))
                                                 <div class="w-full lg:w-48 h-32 rounded-xl overflow-hidden flex-shrink-0">
-                                                    <img src="{{ asset('storage/' . $icon['image']) }}" class="w-full h-full object-cover">
+                                                    <img loading="lazy" decoding="async" src="{{ asset('storage/' . $icon['image']) }}" class="w-full h-full object-cover">
                                                 </div>
                                             @endif
                                             <div>
@@ -166,7 +165,7 @@
                                             <div class="absolute inset-0 bg-green-100 rounded-full transform scale-0 group-hover:scale-100 transition-transform duration-500"></div>
                                             <div class="relative w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-lg group-hover:shadow-xl transition-all duration-500">
                                                 @if(!empty($icon['image']))
-                                                    <img src="{{ asset('storage/' . $icon['image']) }}" class="w-12 h-12 object-contain filter brightness-0 invert">
+                                                    <img loading="lazy" decoding="async" src="{{ asset('storage/' . $icon['image']) }}" class="w-12 h-12 object-contain filter brightness-0 invert">
                                                 @else
                                                     <svg class="w-8 h-8 text-white transform group-hover:scale-110 transition-transform duration-500" 
                                                         fill="none" stroke="currentColor" viewBox="0 0 24 24">

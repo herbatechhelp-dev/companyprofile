@@ -16,7 +16,7 @@
     @if($articleImage)
         <x-hero-banner
             :title="$article->title"
-            :subtitle="(strtoupper($article->articleCategory->name ?? '')) . ' • ' . $article->created_at->format('F d, Y')"
+            :subtitle="(strtoupper($article->articleCategory->name ?? '')) . ' • ' . $article->published_at->format('F d, Y')"
             :backgroundImage="$articleImage"
             height="small"
             overlay="gradient"

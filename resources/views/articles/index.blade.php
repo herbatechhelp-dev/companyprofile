@@ -35,11 +35,11 @@
                         <article class="bg-white rounded-custom shadow-custom overflow-hidden hover:shadow-xl transition duration-300 animate-fade-in">
                             @if($article->images->count() > 0)
                                 <div class="h-48 overflow-hidden">
-                                    <img src="{{ asset('storage/' . $article->images->first()->image) }}" alt="{{ $article->title }}" class="w-full h-full object-cover hover:scale-110 transition duration-500">
+                                    <img loading="lazy" decoding="async" src="{{ asset('storage/' . $article->images->first()->image) }}" alt="{{ $article->title }}" class="w-full h-full object-cover hover:scale-110 transition duration-500">
                                 </div>
                             @elseif($article->thumbnail)
                                 <div class="h-48 overflow-hidden">
-                                    <img src="{{ asset('storage/' . $article->thumbnail) }}" alt="{{ $article->title }}" class="w-full h-full object-cover hover:scale-110 transition duration-500">
+                                    <img loading="lazy" decoding="async" src="{{ asset('storage/' . $article->thumbnail) }}" alt="{{ $article->title }}" class="w-full h-full object-cover hover:scale-110 transition duration-500">
                                 </div>
                             @else
                                 <div class="h-48 bg-green-100 flex items-center justify-center">

@@ -10,30 +10,58 @@ use App\Models\Facility;
 use App\Models\SiteSetting;
 use App\Models\ArticleCategory;
 use App\Models\MaklonFlowStep;
+use App\Models\Service;
+use App\Models\Material;
+use App\Models\Advantage;
+use App\Models\Partner;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
     public function home()
     {
-        $heroSection = HomeSection::where('section', 'hero')->first();
-        $aboutSection = HomeSection::where('section', 'about')->first();
-        $productsSection = HomeSection::where('section', 'products')->first();
-        $researchSection = HomeSection::where('section', 'research')->first();
-        
+        $sections = HomeSection::whereIn('section', ['hero', 'about', 'products', 'research'])
+            ->get()
+            ->keyBy('section');
+        $heroSection = $sections->get('hero');
+        $aboutSection = $sections->get('about');
+        $productsSection = $sections->get('products');
+        $researchSection = $sections->get('research');
+
+        $companyInfos = CompanyInfo::whereIn('page', ['vision', 'mission', 'culture', 'tagline'])
+            ->get()
+            ->keyBy('page');
+        $visionInfo = $companyInfos->get('vision');
+        $missionInfo = $companyInfos->get('mission');
+        $cultureInfo = $companyInfos->get('culture');
+        $taglineInfo = $companyInfos->get('tagline');
+
         try {
             $maklonSteps = MaklonFlowStep::active()->ordered()->get();
         } catch (\Exception $e) {
             $maklonSteps = collect();
         }
-        
-        $featuredProducts = Product::with('images')->featured()->orderBy('order')->take(6)->get();
-        
+
+        $services = Service::where('is_active', true)->orderBy('sort_order')->get();
+        $materials = Material::where('is_active', true)->orderBy('sort_order')->get();
+        $advantages = Advantage::active()->orderBy('sort_order')->get();
+        $partners = Partner::active()->orderBy('sort_order')->get();
+
+        $featuredProducts = Product::with('images')->featured()->orderBy('order')->get();
+
         return view('home', compact(
             'heroSection',
             'aboutSection',
             'productsSection',
             'researchSection',
+            'visionInfo',
+            'missionInfo',
+            'cultureInfo',
+            'taglineInfo',
+            'services',
+            'materials',
+            'advantages',
+            'partners',
             'featuredProducts',
             'maklonSteps'
         ));
@@ -165,7 +193,7 @@ class PageController extends Controller
 
     public function facilityDetail($slug)
     {
-        $facility = Facility::with('images')->where('slug', $slug)->firstOrFail();
+        $facility = Facility::with('images')->active()->where('slug', $slug)->firstOrFail();
         $relatedFacilities = Facility::with('images')
             ->active()
             ->where('id', '!=', $facility->id)

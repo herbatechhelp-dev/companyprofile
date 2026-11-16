@@ -7,6 +7,22 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## CSS (Tailwind) — wajib build setelah mengubah class
+
+Tailwind tidak lagi dimuat dari CDN. CSS dibuat oleh Vite dari class yang dipakai di
+`resources/views/**/*.blade.php` dan disimpan di `public/build` (folder ini ikut di-commit,
+jadi server production tidak perlu Node.js).
+
+Setiap kali menambah/mengubah class Tailwind di file Blade:
+
+```bash
+npm install      # sekali saja
+npm run build    # lalu commit perubahan di public/build
+```
+
+Saat development bisa memakai `npm run dev` (CSS otomatis diperbarui). Jangan merangkai nama
+class secara dinamis (mis. `'bg-' . $warna`); tulis nama class lengkap agar terdeteksi saat build.
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:

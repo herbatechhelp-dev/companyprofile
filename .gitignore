@@ -32,7 +32,6 @@
 
 /.phpunit.cache
 /node_modules
-/public/build
 /public/hot
 /public/storage
 /public/storage_backup

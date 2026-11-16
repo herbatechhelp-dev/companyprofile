@@ -24,7 +24,7 @@ class AdminPanelProvider extends PanelProvider
         // Ambil logo dan favicon dari SiteSetting
         $logo = $this->getLogoFromSiteSetting();
         $favicon = $this->getFaviconFromSiteSetting() ?: $logo;
-        $companyName = env('APP_NAME', 'Admin Panel');
+        $companyName = config('app.name', 'Admin Panel');
 
         return $panel
             ->default()
@@ -71,21 +71,21 @@ class AdminPanelProvider extends PanelProvider
     {
         try {
             // Coba ambil logo dari SiteSetting
-            $siteSetting = \App\Models\SiteSetting::where('key', 'logo')->first();
+            $value = \App\Models\SiteSetting::allCached()['logo']['value'] ?? null;
             
-            if ($siteSetting && $siteSetting->value) {
+            if ($value) {
                 // Jika logo ada di storage
-                if (strpos($siteSetting->value, 'storage/') === 0) {
-                    return '/' . $siteSetting->value;
+                if (strpos($value, 'storage/') === 0) {
+                    return '/' . $value;
                 }
                 
                 // Jika logo adalah full URL
-                if (filter_var($siteSetting->value, FILTER_VALIDATE_URL)) {
-                    return $siteSetting->value;
+                if (filter_var($value, FILTER_VALIDATE_URL)) {
+                    return $value;
                 }
                 
                 // Jika logo path relative
-                return '/storage/' . $siteSetting->value;
+                return '/storage/' . $value;
             }
         } catch (\Exception $e) {
             // Fallback jika error
@@ -101,14 +101,14 @@ class AdminPanelProvider extends PanelProvider
     private function getFaviconFromSiteSetting()
     {
         try {
-            $siteSetting = \App\Models\SiteSetting::where('key', 'favicon')->first();
+            $value = \App\Models\SiteSetting::allCached()['favicon']['value'] ?? null;
             
-            if ($siteSetting && $siteSetting->value) {
-                if (filter_var($siteSetting->value, FILTER_VALIDATE_URL)) {
-                    return $siteSetting->value;
+            if ($value) {
+                if (filter_var($value, FILTER_VALIDATE_URL)) {
+                    return $value;
                 }
                 
-                return '/storage/' . $siteSetting->value;
+                return '/storage/' . $value;
             }
         } catch (\Exception $e) {}
 
@@ -120,7 +120,7 @@ class AdminPanelProvider extends PanelProvider
      */
     private function getDefaultLogo()
     {
-        $companyName = env('APP_NAME', 'Admin');
+        $companyName = config('app.name', 'Admin');
         $initial = strtoupper(substr($companyName, 0, 1));
         
         // Return SVG logo sebagai fallback

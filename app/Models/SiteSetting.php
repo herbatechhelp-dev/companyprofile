@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class SiteSetting extends Model
 {
@@ -15,20 +16,51 @@ class SiteSetting extends Model
         'type'
     ];
 
+    private const CACHE_KEY = 'site_settings.all';
+
+    /** Salinan di memori untuk satu request, agar cache tidak dibaca berulang kali. */
+    private static ?array $memo = null;
+
+    protected static function booted(): void
+    {
+        // Setiap perubahan dari admin langsung menghapus cache
+        static::saved(fn () => static::flushCache());
+        static::deleted(fn () => static::flushCache());
+    }
+
+    public static function flushCache(): void
+    {
+        static::$memo = null;
+        Cache::forget(self::CACHE_KEY);
+    }
+
+    /**
+     * Semua setting dalam satu query, disimpan di cache: [key => ['value' => ..., 'type' => ...]].
+     */
+    public static function allCached(): array
+    {
+        return static::$memo ??= Cache::rememberForever(self::CACHE_KEY, function () {
+            return static::query()
+                ->get(['key', 'value', 'type'])
+                ->mapWithKeys(fn ($s) => [$s->key => ['value' => $s->value, 'type' => $s->type]])
+                ->all();
+        });
+    }
+
     public static function getValue($key, $default = null)
     {
-        $setting = static::where('key', $key)->first();
-        
+        $setting = static::allCached()[$key] ?? null;
+
         if (!$setting) {
             return $default;
         }
 
         // Handle image type - return root-relative path for better compatibility with different domains
-        if ($setting->type === 'image' && $setting->value) {
-            return '/storage/' . $setting->value;
+        if ($setting['type'] === 'image' && $setting['value']) {
+            return '/storage/' . $setting['value'];
         }
 
-        return $setting->value ?? $default;
+        return $setting['value'] ?? $default;
     }
 
     public static function setValue($key, $value, $type = 'text')

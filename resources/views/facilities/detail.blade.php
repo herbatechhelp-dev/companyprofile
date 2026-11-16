@@ -102,7 +102,7 @@
                         @foreach($facility->images as $index => $image)
                             <div class="flex flex-col gap-4">
                                 <div class="rounded-xl overflow-hidden shadow-lg">
-                                    <img src="{{ asset('storage/' . $image->image) }}" 
+                                    <img loading="lazy" decoding="async" src="{{ asset('storage/' . $image->image) }}" 
                                          alt="{{ $image->caption ?? 'Facility Image ' . ($index + 1) }}" 
                                          class="w-full h-auto object-cover">
                                 </div>
@@ -162,11 +162,11 @@
                                 <!-- Facility Image -->
                                 <div class="h-48 overflow-hidden bg-gray-200 relative">
                                     @if($relatedFacility->images->count() > 0)
-                                        <img src="{{ asset('storage/' . $relatedFacility->images->first()->image) }}" 
+                                        <img loading="lazy" decoding="async" src="{{ asset('storage/' . $relatedFacility->images->first()->image) }}" 
                                              alt="{{ $relatedFacility->name }}" 
                                              class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
                                     @elseif($relatedFacility->image)
-                                        <img src="{{ asset('storage/' . $relatedFacility->image) }}" 
+                                        <img loading="lazy" decoding="async" src="{{ asset('storage/' . $relatedFacility->image) }}" 
                                              alt="{{ $relatedFacility->name }}" 
                                              class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
                                     @else
@@ -212,7 +212,7 @@
 
         function shareOnTwitter() {
             const url = window.location.href;
-            const title = '{{ $facility->name }}';
+            const title = @json($facility->name);
             window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`, '_blank', 'width=600,height=400');
         }
 

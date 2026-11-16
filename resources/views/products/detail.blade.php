@@ -164,11 +164,11 @@
                                 <!-- Product Image -->
                                 <div class="h-48 rounded-lg overflow-hidden mb-4 bg-gray-200">
                                     @if($relatedProduct->images->count() > 0)
-                                        <img src="{{ asset('storage/' . $relatedProduct->images->first()->image) }}" 
+                                        <img loading="lazy" decoding="async" src="{{ asset('storage/' . $relatedProduct->images->first()->image) }}" 
                                              alt="{{ $relatedProduct->name }}" 
                                              class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
                                     @elseif($relatedProduct->image)
-                                        <img src="{{ asset('storage/' . $relatedProduct->image) }}" 
+                                        <img loading="lazy" decoding="async" src="{{ asset('storage/' . $relatedProduct->image) }}" 
                                              alt="{{ $relatedProduct->name }}" 
                                              class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
                                     @else
@@ -207,7 +207,7 @@
 
         function shareOnTwitter() {
             const url = window.location.href;
-            const title = '{{ $product->name }}';
+            const title = @json($product->name);
             window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`, '_blank', 'width=600,height=400');
         }
 

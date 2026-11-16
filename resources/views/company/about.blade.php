@@ -57,7 +57,7 @@
                     @if($ourGroup->banner_image)
                     <div class="relative" data-aos="fade-left">
                         <div class="absolute -inset-4 bg-green-200/50 rounded-3xl blur-2xl"></div>
-                        <img src="{{ asset('storage/' . $ourGroup->banner_image) }}" class="relative w-full rounded-3xl shadow-2xl border-4 border-white">
+                        <img loading="lazy" decoding="async" src="{{ asset('storage/' . $ourGroup->banner_image) }}" class="relative w-full rounded-3xl shadow-2xl border-4 border-white">
                     </div>
                     @endif
                 </div>
@@ -68,7 +68,7 @@
                         <div class="w-full md:w-[calc(33.333%-1.333rem)] bg-white p-8 rounded-2xl shadow-soft border border-green-100/50 hover:shadow-xl transition-all duration-300" data-aos="zoom-in">
                             <div class="w-16 h-16 bg-green-50 rounded-xl flex items-center justify-center mb-6 mx-auto">
                                 @if(!empty($icon['image']))
-                                    <img src="{{ asset('storage/' . $icon['image']) }}" class="w-10 h-10 object-contain">
+                                    <img loading="lazy" decoding="async" src="{{ asset('storage/' . $icon['image']) }}" class="w-10 h-10 object-contain">
                                 @else
                                     <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -120,7 +120,7 @@
 
                                 @if(!empty($icon['image']))
                                     <div class="w-full h-40 rounded-2xl overflow-hidden mb-6 bg-gray-50 border-4 border-white shadow-inner">
-                                        <img src="{{ asset('storage/' . $icon['image']) }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                                        <img loading="lazy" decoding="async" src="{{ asset('storage/' . $icon['image']) }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                                     </div>
                                 @endif
 

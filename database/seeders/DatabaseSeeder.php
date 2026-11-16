@@ -17,6 +17,13 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        // Seeder ini berisi data contoh. Jangan jalankan di production agar
+        // data asli tidak bercampur dengan data dummy.
+        if (app()->isProduction()) {
+            $this->command?->warn('DatabaseSeeder dilewati: environment production.');
+            return;
+        }
+
         // Clear existing data first
         $this->clearExistingData();
 
@@ -104,7 +111,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($settings as $setting) {
-            SiteSetting::updateOrCreate(
+            SiteSetting::firstOrCreate(
                 ['key' => $setting['key']],
                 $setting
             );
@@ -113,20 +120,27 @@ class DatabaseSeeder extends Seeder
 
     private function createAdminUsers(): void
     {
-        $users = [
+        $email = env('SEED_ADMIN_EMAIL', 'admin@herbatech.tech');
+        $password = env('SEED_ADMIN_PASSWORD');
+        $generated = false;
+
+        if (empty($password)) {
+            $password = Str::password(16);
+            $generated = true;
+        }
+
+        // firstOrCreate: password user yang sudah ada tidak akan direset
+        $user = User::firstOrCreate(
+            ['email' => $email],
             [
                 'name' => 'Administrator',
-                'email' => 'admin@herbatech.tech',
-                'password' => 'Admin@12345',
+                'password' => $password,
                 'email_verified_at' => now(),
-            ],
-        ];
+            ]
+        );
 
-        foreach ($users as $user) {
-            User::updateOrCreate(
-                ['email' => $user['email']],
-                $user
-            );
+        if ($user->wasRecentlyCreated && $generated) {
+            $this->command?->info("Admin dibuat: {$email} / password: {$password} (segera ganti setelah login)");
         }
     }
 
@@ -161,7 +175,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($sections as $section) {
-            HomeSection::updateOrCreate(
+            HomeSection::firstOrCreate(
                 ['section' => $section['section']],
                 $section
             );
@@ -204,7 +218,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($companyPages as $page) {
-            CompanyInfo::updateOrCreate(
+            CompanyInfo::firstOrCreate(
                 ['page' => $page['page']],
                 $page
             );
@@ -259,7 +273,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($products as $product) {
-            Product::updateOrCreate(
+            Product::firstOrCreate(
                 ['name' => $product['name']],
                 $product
             );
@@ -338,7 +352,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($articles as $article) {
-            Article::updateOrCreate(
+            Article::firstOrCreate(
                 ['slug' => $article['slug']],
                 $article
             );

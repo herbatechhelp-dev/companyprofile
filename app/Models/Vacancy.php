@@ -44,7 +44,7 @@ class Vacancy extends Model
         return $query->where('is_active', true)
                      ->where(function($q) {
                          $q->whereNull('closing_date')
-                           ->orWhere('closing_date', '>=', now());
+                           ->orWhereDate('closing_date', '>=', today());
                      });
     }
 }

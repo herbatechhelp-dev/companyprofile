@@ -51,15 +51,9 @@
 <section class="relative overflow-hidden hero-banner -mt-24 {{ $heightClasses[$height] }}" data-animation="{{ $animation }}">
     <!-- Background Layer -->
     <div class="absolute inset-0 z-0">
-        @if($backgroundVideo)
-            <!-- Video Background -->
-            <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover hero-bg-video">
-                <source src="{{ asset('storage/' . $backgroundVideo) }}" type="video/mp4">
-            </video>
-        @elseif($backgroundImage)
-            <!-- Image Background -->
-            <!-- Image Background -->
-            @php
+        @php
+            $bgSrc = null;
+            if ($backgroundImage) {
                 $bgSrc = $backgroundImage;
                 if (!Str::startsWith($bgSrc, ['http', 'https'])) {
                     if (Str::startsWith($bgSrc, ['/storage', 'storage'])) {
@@ -68,9 +62,21 @@
                          $bgSrc = asset('storage/' . $bgSrc);
                     }
                 }
-            @endphp
+            }
+        @endphp
+        @if($backgroundVideo)
+            <!-- Video Background: dimuat setelah halaman selesai (lihat script lazy-video di layout) -->
+            <div class="absolute inset-0 bg-gradient-to-r from-green-600 to-green-700"></div>
+            <video muted loop playsinline preload="none" data-lazy-video
+                   @if($bgSrc) poster="{{ $bgSrc }}" @endif
+                   class="absolute inset-0 w-full h-full object-cover hero-bg-video">
+                <source data-src="{{ asset('storage/' . $backgroundVideo) }}" type="video/mp4">
+            </video>
+        @elseif($bgSrc)
+            <!-- Image Background -->
             <img src="{{ $bgSrc }}"
                  alt="{{ $title }}"
+                 fetchpriority="high"
                  class="w-full h-full object-cover hero-bg-image">
         @else
             <!-- Gradient Background -->

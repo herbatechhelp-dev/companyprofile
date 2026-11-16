@@ -5,7 +5,6 @@
 @section('content')
     <!-- Hero Section - True Full Screen -->
     @php
-        $heroSection = App\Models\HomeSection::where('section', 'hero')->first();
         $logo = App\Models\SiteSetting::getLogo();
         $heroTitle = App\Models\SiteSetting::getValue('hero_title', App\Models\SiteSetting::getCompanyName());
         $tagline = App\Models\SiteSetting::getValue('tagline', 'Best Partner for Your Product');
@@ -19,9 +18,11 @@
     <section class="relative flex items-center justify-center overflow-hidden hero-section min-h-screen h-[100dvh]">
         <!-- Background Elements -->
         @if($heroSection && $heroSection->background_video)
-            <video class="absolute inset-0 w-full h-full object-cover" autoplay muted loop playsinline>
-                <source src="{{ asset('storage/' . $heroSection->background_video) }}" type="video/mp4">
-                Your browser does not support the video tag.
+            <!-- Video dimuat setelah halaman selesai (lihat script lazy-video di layout) -->
+            <div class="absolute inset-0 bg-gradient-to-br from-green-600 via-green-500 to-green-400"></div>
+            <video class="absolute inset-0 w-full h-full object-cover" muted loop playsinline preload="none" data-lazy-video
+                   @if($heroSection->background_image) poster="{{ asset('storage/' . $heroSection->background_image) }}" @endif>
+                <source data-src="{{ asset('storage/' . $heroSection->background_video) }}" type="video/mp4">
             </video>
         @elseif($heroSection && $heroSection->background_image)
             <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ asset('storage/' . $heroSection->background_image) }}')"></div>
@@ -83,9 +84,6 @@
     </div>
 
     <!-- About Section - Hijau Muda -->
-    @php
-        $aboutSection = App\Models\HomeSection::where('section', 'about')->first();
-    @endphp
     
     @if($aboutSection && $aboutSection->is_active)
     <section id="about" class="py-20 bg-gradient-to-br from-green-50 to-emerald-50">
@@ -122,7 +120,7 @@
                 <!-- Column 2: Image -->
                 <div class="animate-fade-in">
                     @if($aboutSection->background_image)
-                    <img src="{{ asset('storage/' . $aboutSection->background_image) }}" alt="About Us" class="w-full rounded-custom shadow-custom border-4 border-white">
+                    <img loading="lazy" decoding="async" src="{{ asset('storage/' . $aboutSection->background_image) }}" alt="About Us" class="w-full rounded-custom shadow-custom border-4 border-white">
                     @else
                     <div class="bg-green-100 rounded-custom shadow-custom w-full h-96 flex items-center justify-center border-4 border-white">
                         <span class="text-green-600 text-lg">About Us Image</span>
@@ -216,11 +214,6 @@
     @endif
 
     <!-- Vision & Mission Section - Hijau Sedang -->
-    @php
-        $visionInfo = App\Models\CompanyInfo::where('page', 'vision')->first();
-        $missionInfo = App\Models\CompanyInfo::where('page', 'mission')->first();
-        $cultureInfo = App\Models\CompanyInfo::where('page', 'culture')->first();
-    @endphp
     
     <section id="vision-mission" class="py-20 bg-gradient-to-br from-emerald-50 to-green-100">
         <div class="container mx-auto px-4">
@@ -346,7 +339,7 @@
                         <div class="flex items-center mb-6 flex-shrink-0">
                             <div class="w-16 h-16 bg-green-800 rounded-full flex items-center justify-center mr-4 shadow-lg flex-shrink-0">
                                 @if($cultureInfo->banner_image)
-                                    <img src="{{ asset('storage/'.$cultureInfo->banner_image) }}" class="w-10 h-10 object-contain rounded-full" alt="Culture">
+                                    <img loading="lazy" decoding="async" src="{{ asset('storage/'.$cultureInfo->banner_image) }}" class="w-10 h-10 object-contain rounded-full" alt="Culture">
                                 @else
                                     <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
@@ -395,9 +388,6 @@
     </section>
 
     <!-- Tagline Banner (Sebagai Batas Section Full Width) -->
-    @php
-        $taglineInfo = App\Models\CompanyInfo::where('page', 'tagline')->first();
-    @endphp
     
     @if($taglineInfo || true) <!-- Akan kita tampilkan default statis jika kosong -->
     <div class="w-full relative overflow-hidden py-8 md:py-12">
@@ -437,9 +427,6 @@
     @endif
 
     <!-- Services Section - Layanan Unggulan Kami -->
-    @php
-        $services = App\Models\Service::where('is_active', true)->orderBy('sort_order')->get();
-    @endphp
 
     @if($services->count() > 0)
     <!-- Section Divider Layanan -->
@@ -526,7 +513,7 @@
                         @if($service->image)
                         <div class="w-16 h-16 rounded-2xl overflow-hidden bg-emerald-100
                                     group-hover:scale-110 transition-transform duration-300 shadow-sm border border-emerald-200">
-                            <img src="{{ asset('storage/' . $service->image) }}" alt="{{ $service->title }}"
+                            <img loading="lazy" decoding="async" src="{{ asset('storage/' . $service->image) }}" alt="{{ $service->title }}"
                                  class="w-full h-full object-cover">
                         </div>
                         @else
@@ -560,9 +547,6 @@
     @endif
 
     <!-- Section Bahan yang Kami Gunakan -->
-    @php
-        $materials = App\Models\Material::where('is_active', true)->orderBy('sort_order')->get();
-    @endphp
 
     @if($materials->count() > 0)
     <!-- Section Divider Bahan -->
@@ -594,7 +578,7 @@
                     <div class="flex items-center justify-center gap-2 mb-5">
                         <span class="text-green-700 flex-shrink-0">
                             @if($material->image)
-                                <img src="{{ asset('storage/' . $material->image) }}"
+                                <img loading="lazy" decoding="async" src="{{ asset('storage/' . $material->image) }}"
                                      alt="{{ $material->title }}"
                                      class="w-6 h-6 object-contain">
                             @else
@@ -617,7 +601,7 @@
                                     hover:shadow-md hover:border-green-200 transition-all duration-300">
                             <div class="aspect-square overflow-hidden bg-gray-50">
                                 @if(!empty($item['image']))
-                                <img src="{{ asset('storage/' . $item['image']) }}"
+                                <img loading="lazy" decoding="async" src="{{ asset('storage/' . $item['image']) }}"
                                      alt="{{ $item['name'] ?? '' }}"
                                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                                 @else
@@ -653,7 +637,7 @@
                                     hover:shadow-md hover:border-green-200 transition-all duration-300">
                             <div class="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-gray-50 border border-gray-100">
                                 @if(!empty($item['image']))
-                                <img src="{{ asset('storage/' . $item['image']) }}"
+                                <img loading="lazy" decoding="async" src="{{ asset('storage/' . $item['image']) }}"
                                      alt="{{ $item['name'] ?? '' }}"
                                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                                 @else
@@ -693,10 +677,6 @@
     @endif
 
     <!-- Section Mengapa Harus Kami? -->
-    @php
-        $advantages = App\Models\Advantage::active()->orderBy('sort_order')->get();
-        $maklonSteps = App\Models\MaklonFlowStep::active()->ordered()->get();
-    @endphp
 
     @if($advantages->count() > 0)
     <!-- Section Divider Mengapa Harus Kami -->
@@ -722,7 +702,7 @@
                 <div class="w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] flex flex-col items-center text-center bg-white rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-50 hover:shadow-[0_8px_30px_rgb(46,139,87,0.08)] transition-all duration-300 transform hover:-translate-y-1" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
                     <div class="w-24 h-24 rounded-2xl bg-green-50 flex items-center justify-center mb-6 border border-green-100">
                         @if($adv->icon_image)
-                            <img src="{{ asset('storage/' . $adv->icon_image) }}" alt="{{ $adv->title }}" class="w-14 h-14 object-contain">
+                            <img loading="lazy" decoding="async" src="{{ asset('storage/' . $adv->icon_image) }}" alt="{{ $adv->title }}" class="w-14 h-14 object-contain">
                         @else
                             <svg class="w-12 h-12 text-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -755,9 +735,6 @@
     @endif
 
     <!-- Partner/Client Marquee Section -->
-    @php
-        $partners = App\Models\Partner::active()->orderBy('sort_order')->get();
-    @endphp
 
     @if($partners->count() > 0)
     <div class="bg-emerald-50/50 pt-6 pb-8 sm:pt-8 sm:pb-10 overflow-hidden relative z-10" data-aos="fade-up">
@@ -864,10 +841,6 @@
     </div>
 
     <!-- Products Section - Hijau Tua -->
-    @php
-        $productsSection = App\Models\HomeSection::where('section', 'products')->first();
-        $featuredProducts = App\Models\Product::featured()->orderBy('order')->get();
-    @endphp
     
     @if($productsSection && $productsSection->is_active)
     <section id="products" class="pt-20 pb-12 bg-gradient-to-br from-green-100 to-emerald-200">
@@ -890,9 +863,9 @@
                     <div class="bg-white rounded-custom shadow-custom overflow-hidden hover:shadow-xl transition duration-300 animate-fade-in transform hover:-translate-y-1 border-t-4 border-green-600">
                         <div class="h-48 overflow-hidden">
                             @if($product->images->count() > 0)
-                            <img src="{{ asset('storage/' . $product->images->first()->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover hover:scale-110 transition duration-500">
+                            <img loading="lazy" decoding="async" src="{{ asset('storage/' . $product->images->first()->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover hover:scale-110 transition duration-500">
                             @elseif($product->image)
-                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover hover:scale-110 transition duration-500">
+                            <img loading="lazy" decoding="async" src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover hover:scale-110 transition duration-500">
                             @else
                             <div class="w-full h-full bg-green-100 flex items-center justify-center">
                                 <span class="text-green-600">Product Image</span>
@@ -940,9 +913,6 @@
     @endif
 
     <!-- Research Section - Hijau Gelap -->
-    @php
-        $researchSection = App\Models\HomeSection::where('section', 'research')->first();
-    @endphp
     
     @if($researchSection && $researchSection->is_active)
     <section id="research" class="py-20 bg-gradient-to-br from-emerald-100 to-green-200">
@@ -1074,11 +1044,7 @@
         transform: translateY(0);
     }
 
-    /* Marquee Animation */
-    .animate-marquee {
-        animation: marquee 25s linear infinite;
-    }
-    
+    /* Marquee Animation (durasi diatur di layout lewat setting partner_marquee_speed) */
     .marquee-wrapper:hover .animate-marquee {
         animation-play-state: paused;
     }

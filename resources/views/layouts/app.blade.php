@@ -37,11 +37,10 @@
     <meta name="msapplication-TileColor" content="#2E8B57">
 
     <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- AOS Animation CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -94,7 +93,10 @@
         }
 
         @php
-            $marqueeSpeed = App\Models\SiteSetting::getValue('partner_marquee_speed', 25);
+            $marqueeSpeed = (int) App\Models\SiteSetting::getValue('partner_marquee_speed', 25);
+            if ($marqueeSpeed <= 0) {
+                $marqueeSpeed = 25;
+            }
         @endphp
         .animate-marquee {
             display: flex !important;
@@ -102,9 +104,7 @@
             min-width: 100% !important;
             align-items: center;
             justify-content: space-around;
-            animation: marquee
-                {{ $marqueeSpeed }}
-                s linear infinite !important;
+            animation: marquee {{ $marqueeSpeed }}s linear infinite !important;
             will-change: transform;
         }
 
@@ -421,6 +421,10 @@
     </style>
 
     @stack('styles')
+
+    <!-- Tailwind CSS (hasil build Vite: `npm run build`).
+         Sengaja diletakkan paling akhir agar urutan cascade sama seperti saat memakai CDN. -->
+    @vite('resources/css/app.css')
 </head>
 
 <body class="bg-gray-50">
@@ -588,7 +592,7 @@
                 <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 rounded-custom flex items-center justify-center">
                         @if($logo)
-                            <img src="{{ $logo }}" alt="Logo" class="w-10 h-10 object-contain">
+                            <img loading="lazy" decoding="async" src="{{ $logo }}" alt="Logo" class="w-10 h-10 object-contain">
                         @else
                             <div
                                 class="w-10 h-10 bg-green-500 rounded-custom flex items-center justify-center text-white font-bold text-lg">
@@ -770,7 +774,7 @@
                                     class="absolute inset-0 bg-[#B8D5F1]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                                 </div>
                                 @if($logo)
-                                    <img src="{{ $logo }}" alt="Logo"
+                                    <img loading="lazy" decoding="async" src="{{ $logo }}" alt="Logo"
                                         class="w-10 h-10 object-contain relative z-10 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
                                 @else
                                     <div class="text-[#B8D5F1] font-bold text-2xl relative z-10 tracking-wider">
@@ -1054,7 +1058,7 @@
         });
 
         // Check if current page is home page
-        const isHomePage = window.location.pathname === '/' || window.location.pathname === '/home';
+        const isHomePage = @json($isHomePage);
 
         // Header scroll effect - ONLY FOR HOME PAGE
         if (isHomePage) {
@@ -1152,10 +1156,37 @@
         });
     </script>
 
+    <!-- Lazy video: video latar baru diunduh setelah halaman selesai dimuat,
+         dan dilewati untuk pengguna mode hemat data / koneksi 2G -->
+    <script>
+        window.addEventListener('load', function () {
+            var conn = navigator.connection || {};
+            if (conn.saveData || /(^|-)2g$/.test(conn.effectiveType || '')) return;
+
+            document.querySelectorAll('video[data-lazy-video]').forEach(function (video) {
+                video.querySelectorAll('source[data-src]').forEach(function (source) {
+                    source.src = source.dataset.src;
+                });
+                video.load();
+                var p = video.play();
+                if (p && p.catch) p.catch(function () {});
+            });
+        });
+    </script>
+
     <!-- Floating Contact Widget -->
     @php
-        $phone = App\Models\SiteSetting::getPhone();
-        $waNumber = preg_replace('/[^0-9]/', '', $phone);
+        // Pakai nilai asli dari setting (tanpa placeholder) agar tombol tidak muncul saat belum diisi
+        $phone = App\Models\SiteSetting::getValue('phone');
+        $waNumber = preg_replace('/[^0-9]/', '', (string) $phone);
+        // wa.me wajib memakai kode negara: ubah awalan 0 menjadi 62
+        if (str_starts_with($waNumber, '0')) {
+            $waNumber = '62' . substr($waNumber, 1);
+        }
+        // Nomor terlalu pendek dianggap tidak valid
+        if (strlen($waNumber) < 9) {
+            $waNumber = '';
+        }
         $igUrl = App\Models\SiteSetting::getInstagramUrl();
         $fbUrl = App\Models\SiteSetting::getFacebookUrl();
         $companyName = App\Models\SiteSetting::getCompanyName();
