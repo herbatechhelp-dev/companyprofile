@@ -18,6 +18,9 @@ class SiteSetting extends Model
 
     private const CACHE_KEY = 'site_settings.all';
 
+    public const CONTACT_FORWARD_ENABLED_KEY = 'contact_forward_enabled';
+    public const CONTACT_FORWARD_EMAIL_KEY = 'contact_forward_email';
+
     /** Salinan di memori untuk satu request, agar cache tidak dibaca berulang kali. */
     private static ?array $memo = null;
 
@@ -120,6 +123,61 @@ class SiteSetting extends Model
     public static function getEmail()
     {
         return self::getValue('email', 'info@company.com');
+    }
+
+    /**
+     * Cek apakah penerusan pesan kontak ke email perusahaan diaktifkan.
+     */
+    public static function isContactForwardEnabled(): bool
+    {
+        return filter_var(
+            self::getValue(self::CONTACT_FORWARD_ENABLED_KEY, '0'),
+            FILTER_VALIDATE_BOOLEAN
+        );
+    }
+
+    /**
+     * Ambil daftar alamat email tujuan forward pesan kontak yang valid.
+     *
+     * @return array<int, string>
+     */
+    public static function getContactForwardEmails(): array
+    {
+        return self::normalizeEmailList(
+            self::getValue(self::CONTACT_FORWARD_EMAIL_KEY, '')
+        );
+    }
+
+    /**
+     * Normalisasi input daftar email (string dipisah koma/titik koma/baris baru atau array)
+     * menjadi array alamat email valid yang unik.
+     *
+     * @param  string|array<int, mixed>|null  $emails
+     * @return array<int, string>
+     */
+    public static function normalizeEmailList(string|array|null $emails): array
+    {
+        if ($emails === null || $emails === '' || $emails === []) {
+            return [];
+        }
+
+        $items = is_array($emails)
+            ? $emails
+            : (preg_split('/[\s,;]+/', $emails, -1, PREG_SPLIT_NO_EMPTY) ?: []);
+
+        $normalized = [];
+
+        foreach ($items as $item) {
+            $email = trim((string) $item);
+            if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                continue;
+            }
+
+            $key = strtolower($email);
+            $normalized[$key] ??= $email;
+        }
+
+        return array_values($normalized);
     }
 
     public static function getFacebookUrl()

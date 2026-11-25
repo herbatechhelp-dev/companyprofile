@@ -21,7 +21,9 @@ Route::get('/products/{slug}', [PageController::class, 'productDetail'])->name('
 
 // Contact
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
-Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+Route::post('/contact', [ContactController::class, 'store'])
+    ->middleware('throttle:5,1')
+    ->name('contact.store');
 
 Route::get('/facilities', [FacilityController::class, 'index'])->name('facilities');
 Route::get('/facilities/{slug}', [PageController::class, 'facilityDetail'])->name('facilities.detail');
