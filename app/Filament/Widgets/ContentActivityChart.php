@@ -66,4 +66,18 @@ class ContentActivityChart extends ChartWidget
     {
         return 'bar';
     }
+
+    protected function getOptions(): array
+    {
+        // Jumlah konten selalu bilangan bulat >= 0
+        return [
+            'scales' => [
+                'y' => [
+                    'beginAtZero' => true,
+                    'suggestedMax' => 5,
+                    'ticks' => ['precision' => 0],
+                ],
+            ],
+        ];
+    }
 }

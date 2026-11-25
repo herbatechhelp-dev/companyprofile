@@ -28,6 +28,7 @@ class LatestContactMessagesTable extends BaseWidget
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nama')
+                    ->limit(25)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->label('Email')
@@ -35,7 +36,8 @@ class LatestContactMessagesTable extends BaseWidget
                     ->copyable(),
                 Tables\Columns\TextColumn::make('message')
                     ->label('Pesan')
-                    ->limit(60),
+                    ->limit(60)
+                    ->wrap(),
                 Tables\Columns\TextColumn::make('is_read')
                     ->label('Status')
                     ->badge()

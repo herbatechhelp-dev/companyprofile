@@ -65,4 +65,18 @@ class ContactMessagesChart extends ChartWidget
     {
         return 'line';
     }
+
+    protected function getOptions(): array
+    {
+        // Jumlah pesan selalu bilangan bulat >= 0
+        return [
+            'scales' => [
+                'y' => [
+                    'beginAtZero' => true,
+                    'suggestedMax' => 5,
+                    'ticks' => ['precision' => 0],
+                ],
+            ],
+        ];
+    }
 }
